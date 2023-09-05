@@ -1,6 +1,6 @@
 # 欢迎来到 平台工程社区·中国  
 
-    PECommunity ——— For Platformer !  
+    PECommunity ——— For Platformers !  
 
 ## 关于社区
 聚集**平台工程**的**倡导者、实践者、参与者、关注者**，共创共建开放包容、创新自治、多元中立的沟通交流与协作平台。
@@ -9,7 +9,7 @@
 
 ### 关注
 - https://github.com/pecommunity
-- http://pecommunity.cn
+- https://pecommunity.cn
 
 ## 加入社区
 在确保您初步了解社区以后，请参考如下步骤加入：
