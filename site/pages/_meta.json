@@ -1,0 +1,44 @@
+{
+    "index": {
+        "type": "page",
+        "title": "平台工程社区",
+        "display": "hidden",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "articles": {
+        "title": "文章",
+        "type": "page"
+    },
+    "events": {
+        "type": "page",
+        "title": "活动",
+        "theme": {
+            "typesetting": "article"
+        }
+    },
+    "jobs": {
+        "type": "page",
+        "title": "招聘墙"
+    },
+    "glossary": {
+        "type": "page",
+        "title": "术语表"
+    },
+    "mindmap": {
+        "type": "page",
+        "title": "知识地图"
+    },
+    "about": {
+        "type": "page",
+        "title": "关于"
+    },
+    "404": {
+        "type": "page",
+        "theme": {
+            "timestamp": false,
+            "typesetting": "article"
+        }
+    }
+}
