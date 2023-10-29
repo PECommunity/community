@@ -18,7 +18,7 @@ const config: DocsThemeConfig = {
     }
   },
   chat: {
-    link: 'https://join.slack.com/t/guancecloud/shared_invite/zt-1ldmfw7t3-OrloE4cFtoMoivklV1kM3A',
+    link: 'https://platformengineering.org/slack-rd',
     icon: (
       <svg fill="currentColor" width="24px" height="24px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <title>slack</title>
@@ -33,13 +33,10 @@ const config: DocsThemeConfig = {
   footer: {
     component: <Footer />,
   },
-  toc: {
-    backToTop: true,
-  },
   banner: {
     key: 'events',
     text: (
-      <a href="https://hacktoberfest.com/" target="_blank">
+      <a href="https://kccncosschn2023.sched.com/event/1RTDe/xiao-zha-zhou-ke-mo-dyags-how-will-the-trend-towards-platform-engineering-adoption-reshape-the-developer-experience-chris-yang-vivo" target="_blank">
         🎉 Platform Engineering on KubeCon China. Read more →
       </a>
     )

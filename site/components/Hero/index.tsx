@@ -19,9 +19,9 @@ export default ({children, ...props}) => {
         <p className="py-6">{props.description}</p>
         <div className="join gap-2">
           {props.buttons.map((btn, i) => (
-            <button key={`hero-action-${i}`} href={btn.link} className={`btn btn-${btn.type} join-item`}>
+            <a key={`hero-action-${i}`} href={btn.link} className={`btn btn-${btn.type} join-item`}>
               {btn.title}
-            </button>
+            </a>
           ))}
         </div>
       </div>
