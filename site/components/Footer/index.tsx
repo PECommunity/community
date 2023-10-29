@@ -37,7 +37,6 @@ export default () => {
 }
 
 export const Footer = (props: FooterProps) => {
-    console.log(props);
     return <footer className="footer p-10 bg-neutral text-neutral-content">
         {props.navs?.map((nav, i) => {
             const navKey = `footer-nav-${i}`
