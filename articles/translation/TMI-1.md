@@ -1,11 +1,14 @@
-应用现代化趋势：左移已经过时，下移才是未来
+---
+title: 应用现代化趋势：左移已经过时，下移才是未来
+author: Richard Seroter
+translator: 崔
+date: 2023-06-09
+originalLink: https://cloud.google.com/blog/products/application-development/richard-seroter-on-shifting-down-vs-shifting-left
+---
 
-2023年6月9日
+# 应用现代化趋势：左移已经过时，下移才是未来
 
 Richard Seroter , Director of Outbound Strategy and Engagement
-
-
-原文链接 https://cloud.google.com/blog/products/application-development/richard-seroter-on-shifting-down-vs-shifting-left
 
 _欢迎阅读《应用现代化趋势》的首刊，也被称为“TMI”——一个完美地概括了我们使命的缩写：热情地分享所有与技术有关的事情。这篇专栏来自Google Cloud的领导者，专注于软件开发、分布式系统、无服务器、微服务、DevOps和SRE、平台运营，或者是当今流行词汇引发专栏作家想象的任何话题。今天我们聆听Richard Seroter的意见，他是Google Cloud现代基础设施团队的对外战略与参与总监，已经思考这些话题超过20年了。亲爱的读者们，请记住，当涉及现代基础设施时，没有所谓的信息过多。_
 

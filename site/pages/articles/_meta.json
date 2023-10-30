@@ -1,0 +1,16 @@
+{
+    "index": {
+        "type": "page",
+        "title": "文章",
+        "display": "hidden",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "monthly": {
+        "title": "每月洞察"
+    },
+    "translation": {
+        "title": "翻译"
+    }
+}
