@@ -1,7 +1,7 @@
 ---
 title: 应用现代化趋势：左移已经过时，下移才是未来
 author: Richard Seroter
-translator: 崔
+translator: 杨振涛
 date: 2023-06-09
 originalLink: https://cloud.google.com/blog/products/application-development/richard-seroter-on-shifting-down-vs-shifting-left
 ---
