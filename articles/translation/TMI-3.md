@@ -1,3 +1,11 @@
+---
+title: 应用现代化趋势：平淡之美 ③
+author: Richard Seroter
+translator: 崔
+date: 2023-08-23
+originalLink: https://cloud.google.com/blog/products/application-modernization/richard-seroter-on-the-need-to-durable-systems
+---
+
 # 应用现代化趋势：平淡之美 ③
 
 远离地球 150 亿英里的宇宙飞船的算力，还比不上现今的个人装备的算力——不仅移动电话比他强，甚至连遥控车钥匙都比他强。[旅行者 1 号](https://solarsystem.nasa.gov/missions/voyager-1/in-depth/)和 [2 号](https://solarsystem.nasa.gov/missions/voyager-2/in-depth/)于 1977 年升空，到现在为止，他们已经服役 45 年，还在以超过 [3 万英里的时速](https://twitter.com/NASAVoyager/status/1659244080172515328)在冰冷空旷的太空中游荡，并向地球回传数据。你觉得 45 年后，你的车钥匙还能用吗？同样令人惊叹的是，两千年罗马人用混凝土用建造的建筑仍在使用。可我家门口的道路，随便有点风吹草动，就会变得坑坑洼洼。
