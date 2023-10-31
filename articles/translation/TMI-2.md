@@ -1,4 +1,4 @@
-# 您的平台工程项目注定失败吗？
+# 应用现代化趋势：您的平台工程项目注定失败吗？ ②
 
 最近，我的同事 [Richard Seroter](https://www.linkedin.com/in/seroter) 在 The Modernization Imperative（TMI）中分享了[下移而非左移](https://cloud.google.com/blog/products/application-development/richard-seroter-on-shifting-down-vs-shifting-left)的观点--利用预建平台减轻开发和运维人员的负担。我的工作是为工程领导者提供云计算现代化建议，从这个角度上来说，我是拥护这一观点的。但是，如果您的企业正在构建自己的平台（以及平台工程团队），在开始之前，我建议先问自己几个问题，否则你的平台就会一败涂地。
 
