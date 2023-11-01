@@ -28,7 +28,7 @@ originalLink: https://cloud.google.com/blog/products/application-modernization/a
 
 如果您无法将所有利益相关者召集到同一房间，您可以使用一个强大的工具来弥合这一差距：用户观摩会。用户观摩会相当于一个焦点小组，将你的工程师聚集在一起，通过单面镜观察隔壁房间的用户与平台的互动。实际上，你只需录制他们的电脑屏幕和声音（当然要征得他们的同意）。招募五名测试用户，给他们同样的两三个目标，让他们分别使用你要取代的传统平台，以及你正在构建的新平台的 MVP 版本来完成。让他们畅所欲言，说出自己的假设和可能遇到的困惑。
 
-![img1](image/image2_HdKMMxj.max-1999x1123.jpg)
+![img1](./image/image2_HdKMMxj.max-1999x1123.jpg)
 
 你会惊奇地发现，即使是最聪明、最精明的测试用户，他们所花的时间也比你想象的要长，而且会卡在你认为不可能卡住的地方。你也许会把这些轶事当作异常现象，或者认为更清晰的文档和更多的培训就能包治百病，但实际上，你正在目睹一个新平台所面临的真正挑战：需要取悦用户，让他们的工作生活更轻松。
 
@@ -42,7 +42,7 @@ originalLink: https://cloud.google.com/blog/products/application-modernization/a
 
 平台的构建过程中更多的挑战来自于学习，而非执行。快速反馈回路和共享学习对于团队的成功至关重要。只有团队成员相互靠近（物理上或虚拟上），并尽量减少对其他团队的依赖时，才能取得成功。为了避免“不是我的工作”的陷阱，即每个人只接受符合其专长或工作要求的工作，这种紧密的关系也是必不可少的。共同的“告诉我怎么做”心态允许团队默认各自的主题专家（SME），但希望团队中的每个人都有能力解决任何技术难题。
 
-![image2](image/image2_Jq1rrfd.max-862x302.png)
+![image2](./image/image2_Jq1rrfd.max-862x302.png)
 
 最后，平台团队是否有可能需要获得许可才能使用某些服务，例如 CISO 或您的企业架构师？如果是这样，让他们（或他们的代表之一）成为团队的核心成员，直到他们的贡献以策略代码和架构蓝图的形式融入平台。
 
@@ -58,7 +58,7 @@ originalLink: https://cloud.google.com/blog/products/application-modernization/a
 
 在谷歌，我们喜欢在许多面向消费者的产品中使用 **H.E.A.R.T.** 框架。我们还在一些内部 IT 平台上使用一个经过修改的框架，我们称之为 **S.U.P.E.R.**：
 
-![image3](image/super.ba9dbf3d.fill-2000x1124.jpg)
+![image3](./image/super.ba9dbf3d.fill-2000x1124.jpg)
 
 ## 找到你的用户
 
