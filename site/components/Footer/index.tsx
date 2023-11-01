@@ -19,7 +19,7 @@ export default () => {
             links: [
                 {
                     title: "平台工程社区",
-                    link: "https://baidu.com"
+                    link: "https://pecommunity.cn"
                 },
             ],
         },
@@ -27,8 +27,8 @@ export default () => {
             title: "友情链接",
             links: [
                 {
-                    title: "平台工程社区",
-                    link: "https://baidu.com"
+                    title: "Platform Engineering",
+                    link: "https://platformengineering.org/"
                 },
             ],
         },
