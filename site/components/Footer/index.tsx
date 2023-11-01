@@ -30,6 +30,10 @@ export default () => {
                     title: "Platform Engineering",
                     link: "https://platformengineering.org/"
                 },
+                {
+                    title: "Platform User Group (PUG)",
+                    link: "https://pug.fyi/"
+                },
             ],
         },
     ]
