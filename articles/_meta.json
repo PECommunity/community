@@ -12,5 +12,8 @@
     },
     "translation": {
         "title": "翻译"
+    },
+    "original": {
+        "title": "原创"
     }
 }
