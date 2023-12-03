@@ -42,11 +42,7 @@ const config: DocsThemeConfig = {
   },
   head: function useHead() {
     const { title } = useConfig()
-    const { route } = useRouter()
-    const socialCard =
-      route === '/' || !title
-        ? 'https://nextra.site/og.jpeg'
-        : `https://nextra.site/api/og?title=${title}`
+    // TODO: add social card in PressKit
 
     return (
       <>
@@ -63,14 +59,14 @@ const config: DocsThemeConfig = {
           content="中立的，非商业目的，以开放协作为中心的中文技术社区."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={socialCard} />
+        {/* <meta name="twitter:image" content={socialCard} /> */}
         <meta name="twitter:site:domain" content="pecommunity.cn" />
         <meta name="twitter:url" content="https://pecommunity.cn" />
         <meta
           name="og:title"
           content={title ? title + ' – PE Community' : 'PE Community'}
         />
-        <meta name="og:image" content={socialCard} />
+        {/* <meta name="og:image" content={socialCard} /> */}
         <meta name="apple-mobile-web-app-title" content="PE Community" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.png" type="image/png" />
