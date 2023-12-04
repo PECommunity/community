@@ -3,4 +3,4 @@
 
 [build]
   publish = ".next"
-  command = "node ../tools/bin/copy && npm run build"
+  command = "cd .. && node ./tools/bin/copy && cd site && npm run build"
