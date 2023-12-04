@@ -9,13 +9,12 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/PECommunity/community'
   },
-  useNextSeoProps() {
-    const { asPath } = useRouter()
-    if (asPath !== '/') {
-      return {
-        titleTemplate: '%s – PE Community'
-      }
-    }
+  editLink: {
+    text: '在 GitHub 上编辑 →'
+  },
+  feedback: {
+    content: '遇到问题？提交反馈 →',
+    labels: 'feedback'
   },
   chat: {
     link: 'https://platformengineering.org/slack-rd',
@@ -32,6 +31,49 @@ const config: DocsThemeConfig = {
   },
   footer: {
     component: <Footer />,
+  },
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
+      return {
+        titleTemplate: '%s – PE Community'
+      }
+    }
+    return {
+        title: 'Platform Engineering Community'
+    }
+  },
+  head: function useHead() {
+    const { title } = useConfig()
+    // TODO: add social card in PressKit
+
+    return (
+      <>
+        <meta name="msapplication-TileColor" content="#fff" />
+        <meta name="theme-color" content="#fff" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Language" content="en" />
+        <meta
+          name="description"
+          content="中立的，非商业目的，以开放协作为中心的中文技术社区."
+        />
+        <meta
+          name="og:description"
+          content="中立的，非商业目的，以开放协作为中心的中文技术社区."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        {/* <meta name="twitter:image" content={socialCard} /> */}
+        <meta name="twitter:site:domain" content="pecommunity.cn" />
+        <meta name="twitter:url" content="https://pecommunity.cn" />
+        <meta
+          name="og:title"
+          content={title ? title + ' – PE Community' : 'PE Community'}
+        />
+        {/* <meta name="og:image" content={socialCard} /> */}
+        <meta name="apple-mobile-web-app-title" content="PE Community" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+      </>
+    )
   },
   banner: {
     key: 'events',

@@ -12,7 +12,9 @@ export default (props: CarouselProps) => {
         <div className="carousel w-full">
             {props.items.map((item, i) => {
                 return <div key={`carousel-item-${i}`} className="carousel-item w-full">
-                    <a href={item.link} target="_blank"><img src={item.image} className="w-full" /></a>
+                    <a href={item.link} target="_blank">
+                        <img src={item.image} className="w-full" />
+                    </a>
                 </div>
             })}
         </div>

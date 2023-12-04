@@ -20,7 +20,7 @@
     },
     "jobs": {
         "type": "page",
-        "title": "招聘墙"
+        "title": "工作机会"
     },
     "glossary": {
         "type": "page",
@@ -28,7 +28,13 @@
     },
     "mindmap": {
         "type": "page",
-        "title": "知识地图"
+        "title": "知识地图",
+        "theme": {
+            "sidebar": false,
+            "toc": false,
+            "breadcrumb": false,
+            "footer": false
+        }
     },
     "about": {
         "type": "page",
