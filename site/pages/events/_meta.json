@@ -1,0 +1,17 @@
+{
+    "index": "",
+    "-- conferences": {
+        "type": "separator",
+        "title": "会议"
+    },
+    "conferences": {
+        "type": "page"
+    },
+    "-- meetups": {
+        "type": "separator",
+        "title": "沙龙"
+    },
+    "meetups": {
+        "type": "page"
+    }
+}

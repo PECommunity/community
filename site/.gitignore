@@ -1,5 +1,2 @@
 .next
 node_modules
-
-# Pages is copied from project root
-pages/*/
