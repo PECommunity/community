@@ -17,14 +17,14 @@ h1 {
 }
 h2, h3, h4, h5, h6 {
 	line-height: 1.5em;
-	margin-top: 2.2em;
+	margin-top: 1.1em;
 	margin-bottom: 4px;
 }
 h2 {
 	font-size: 1.4em;
-	margin: 40px 10px 20px 0;
+	margin: 20px 10px 20px 0;
 	padding-left: 9px;
-	border-left: 6px solid #ff7e79;
+	border-left: 6px solid #149FA6;
 	font-weight: 700;
 	line-height: 1.4;
 }
@@ -62,13 +62,16 @@ img {
 	height: auto;
 }
 dl, ol, ul {
-	margin-top: 12px;
-	margin-bottom: 20px;
-	padding-left: 5%;
+	margin-top: 6px;
+	margin-bottom: 10px;
+	padding-left: 1%;
 	line-height: 1.8;
 }
+sup {
+	margin-left: 2px;
+}
 p {
-	margin: 0 0 20px;
+	margin: 0 0 10px;
 	padding: 0;
 	line-height: 1.8;
 }
@@ -84,9 +87,9 @@ a:focus {
 	outline-offset: -2px;
 }
 blockquote {
-	font-size: 1em;
+	font-size: 0.75em;
 	font-style: normal;
-	padding: 30px 38px;
+	padding: 10px 19px;
 	margin: 0 0 15px;
 	position: relative;
 	line-height: 1.8;
@@ -118,9 +121,11 @@ blockquote:after {
 	bottom: -31px;
 }
 strong, dfn {
+	color: #149FA6;
 	font-weight: 700;
 }
 em, dfn {
+	color: #149FA6;
 	font-style: italic;
 	font-weight: 400;
 }
@@ -183,10 +188,10 @@ hr {
 ol p, ul p {
 	margin-bottom: 0px;
 }
-li {
+/* li {
 	margin-bottom: 0.75em;
 	margin-top: 0.75em;
-}
+} */
 ol#footnotes {
 	font-size: 0.95em;
 	padding-top: 1em;

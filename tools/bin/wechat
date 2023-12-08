@@ -1,32 +1,35 @@
 #!/usr/bin/env node --no-warnings
 // code: language=typescript
 
-import rehypeSanitize from 'rehype-sanitize'
 import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import remarkToc from 'remark-toc'
+import remarkGfm from 'remark-gfm'
+import remarkReference from '../lib/ref.js'
 import {unified} from 'unified'
 import juice from 'juice'
 import fs from 'fs'
 import path from 'path'
 import { URL } from 'url'
 import {read} from 'to-vfile'
+
 const __dirname = new URL('.', import.meta.url).pathname;
 
 async function main() {
     const file = await unified()
-      .use(remarkParse)
-      .use(remarkRehype)
+      .use(remarkParse, {fragment: true})
+      .use(remarkGfm)
       .use(remarkToc)
-      .use(rehypeSanitize)
-      .use(rehypeStringify)
+      .use(remarkReference)
+      .use(remarkRehype, {allowDangerousHtml: true})
+      .use(rehypeStringify, {allowDangerousHtml: true})
       .process(await read(process.argv[2] || 'README.md'))
-
+  
     const style = fs.readFileSync(path.join(__dirname, 'style.css'))
     const parsedHTML = juice(`
         <style>${style}</style>
-        <div id="nice">${file.toString()}</div>
+        <div id="nice">${String(file)}</div>
     `)
     console.log(parsedHTML)
 }
