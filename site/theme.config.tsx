@@ -4,6 +4,13 @@ import type { DocsThemeConfig } from 'nextra-theme-docs'
 import { useConfig } from 'nextra-theme-docs'
 import Footer from './components/Footer'
 
+const gaScript = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E7KFWD585H');
+`
 const config: DocsThemeConfig = {
   logo: <span>平台工程社区 · 中国</span>,
   project: {
@@ -72,6 +79,10 @@ const config: DocsThemeConfig = {
         {/* <meta name="og:image" content={socialCard} /> */}
         <meta name="apple-mobile-web-app-title" content="PE Community" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7KFWD585H"></script>
+        <script>
+          {gaScript}
+        </script>
       </>
     )
   },
