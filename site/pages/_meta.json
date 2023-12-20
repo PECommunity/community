@@ -18,15 +18,15 @@
             "typesetting": "article"
         }
     },
-    "jobs": {
-        "type": "page",
-        "title": "工作机会"
-    },
-    "glossary": {
+      "glossary": {
         "type": "page",
         "title": "术语表"
     },
-    "mindmap": {
+    "share": {
+        "type": "page",
+        "title": "资料共享"
+    },
+        "mindmap": {
         "type": "page",
         "title": "知识地图",
         "theme": {
@@ -35,6 +35,10 @@
             "breadcrumb": false,
             "footer": false
         }
+    },
+    "jobs": {
+        "type": "page",
+        "title": "工作机会"
     },
     "about": {
         "type": "page",
