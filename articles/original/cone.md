@@ -18,7 +18,7 @@ CNOE : Cloud Native Operational Excellence   云原生卓越运营
 
 ## 平台架构
 
-![Platform Architecture](./images_2023/cone-2.png)
+![Platform Architecture](./images_2023/cnoe-2.png)
 
 ## 概述
 
@@ -87,7 +87,7 @@ CNOE 的目标是收集平台工程师设计 IDP 时常用的工具、这些工�
 
 CNOE 绝非试图做到面面俱到，而是旨在收集社区驱动的模式和基于生产中常用部署的最佳实践。
 
-![CNOE](./images_2023/cone-3.png)
+![CNOE](./images_2023/cnoe-3.png)
 
 对于 CNOE 参考实现，我们将提供配置、模式和实践以及以下（不断增长的）技术列表。
 
@@ -111,11 +111,11 @@ CNOE 绝非试图做到面面俱到，而是旨在收集社区驱动的模式和
 
 ### 运维视角
 
-![tech radar ops](./images_2023/cone-4.png)
+![tech radar ops](./images_2023/cnoe-4.png)
 
 ### 应用视角
 
-![tech radar app](./images_2023/cone-5.png)
+![tech radar app](./images_2023/cnoe-5.png)
 
 
 我们希望在平台工程持续火热的当下，CNOE为你带来全新的其实并提供具有实践指导意义的框架参考。
