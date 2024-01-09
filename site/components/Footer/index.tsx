@@ -92,7 +92,12 @@ export const Footer = (props: FooterProps) => {
             return <nav key={navKey}>
                 <header className="footer-title">{nav.title}</header>
                 {nav.links.map((link, j) => {
-                    return <a key={`${navKey}-${j}`} className="link link-hover">{link.title}</a>
+                    return <a
+                        key={`${navKey}-${j}`}
+                        className="link link-hover"
+                        href={link.link}
+                        target="_blank"
+                    >{link.title}</a>
                 })}
             </nav>
         })}
