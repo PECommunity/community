@@ -2,7 +2,7 @@
  * @typedef {import('mdast').Root} Root
  */
 
-import {SKIP, visit} from 'unist-util-visit'
+import {CONTINUE, EXIT, SKIP, visit} from 'unist-util-visit'
 
 /**
  * Change links and images to references with footnote.
@@ -40,8 +40,9 @@ export default function remarkReference() {
 
         if (url.startsWith('#')) {
           parent.children[index] = {type: "emphasis", children: [{type: 'text', value: title}]}
-        } else if (url.startsWith('https://mp.weixin.com')) {          
-          // nop
+          return [SKIP, index] 
+        } else if (url.startsWith('https://mp.weixin.qq.com')) {  
+          return [SKIP, index+1]
         } else {
           const identifier = ++id
 
@@ -56,8 +57,8 @@ export default function remarkReference() {
           //   {type: 'text', value: `${title}: ${url}`},
           // ]}
           references.push(`${title} - ${url}`)
+          return [SKIP, index]
         }
-        return [SKIP, index]
       }
     })
 
