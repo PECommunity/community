@@ -39,8 +39,20 @@ export default () => {
                     link: "https://platformengineering.org/"
                 },
                 {
+                    title: "CNCF app delivery TAG（中文版）",
+                    link: "https://tag-app-delivery.cncf.io/zh"
+                },
+                {
                     title: "Platform User Group (PUG)",
                     link: "https://pug.fyi/"
+                },
+                {
+                    title: "THE NEW STACK",
+                    link: "https://thenewstack.io/platform-engineering/"
+                },
+                {
+                    title: "Microsoft Learn: Platform Engineering",
+                    link: "https://learn.microsoft.com/en-us/platform-engineering/"
                 },
             ],
         },
