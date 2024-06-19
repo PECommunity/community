@@ -1,0 +1,56 @@
+
+### Backstage 文档
+https://backstage.io/docs/references/glossary
+
+- Overview
+    - What is Backstage?
+    - Architecture overview
+    - Roadmap
+    - Vision
+    - The Spotify Story
+    - Strategies for adopting
+    - Release & Versioning Policy
+    - Backstage Threat Model
+    - Support and community
+    - Logo assets
+- Getting Started
+    - Introduction
+    - Configuring Backstage
+    - Using Backstage
+    - Keeping Backstage Updated
+    - Key Concepts
+- Core Features
+    - Software Catalog
+    - Kubernetes
+    - Software Templates
+    - Backstage Search
+    - TechDocs
+- Integrations
+- Plugins
+- Configuration
+- Auth and identity
+- Permissions
+- Tooling
+- Deployment
+- New Backend System
+    - Introduction
+    - Architecture
+    - Building Backends
+    - Building Plugins & Modules
+    - Core Services
+- New Frontend System
+    - Introduction
+    - Architecture
+    - Building Plugins
+    - Building Apps
+    - Utility APIs
+- Designing for Backstage
+- API Reference
+- Tutorials
+- Architecture Decision Records (ADRs)
+- FAQ
+- Accessibility
+- Contribute
+- References
+    - Glossary
+- Glossary
