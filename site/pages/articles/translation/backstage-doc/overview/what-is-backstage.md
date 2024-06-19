@@ -5,7 +5,7 @@ title: Backstage 简介
 description: Backstage 是一个用于构建开发者门户网站的开源框架。Backstage 由集中式软件目录提供支持，可恢复微服务和基础架构的秩序。
 ---
 
-![software-catalog](./assets/header.png)
+![software-catalog](../assets/header.png)
 
 [Backstage](https://backstage.io/) 是一个用于构建开发者门户的开源框架。Backstage 由集中式软件目录提供支持，可恢复微服务和基础架构的秩序，使产品团队在不影响自主性的情况下快速交付高质量代码。
 
