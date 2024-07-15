@@ -5,7 +5,7 @@ import { useConfig } from 'nextra-theme-docs'
 import Footer from './components/Footer'
 
 const config: DocsThemeConfig = {
-  logo: <span>平台工程社区 · 中国</span>,
+  logo: <span>平台工程社区</span>,
   project: {
     link: 'https://github.com/PECommunity/community'
   },
@@ -78,8 +78,8 @@ const config: DocsThemeConfig = {
   banner: {
     key: 'events',
     text: (
-      <a href="https://kccncosschn2023.sched.com/event/1RTDe/xiao-zha-zhou-ke-mo-dyags-how-will-the-trend-towards-platform-engineering-adoption-reshape-the-developer-experience-chris-yang-vivo" target="_blank">
-        🎉 Platform Engineering on KubeCon China. Read more →
+      <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-open-source-summit-ai-dev-china/" target="_blank">
+        🎉 KubeCon + CloudNativeCon + Open Source Summit + AI_dev 中国·香港 2024-8-21~23. 了解更多 →
       </a>
     )
   },
