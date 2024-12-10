@@ -13,9 +13,11 @@
 
 ## 加入社区
 在确保您初步了解社区以后，请参考如下步骤加入：
-1. 填写加入表单 https://www.wenjuan.com/s/UZBZJvwQyMS/
+1. 填写表单申请个人会员 https://www.wenjuan.com/s/UZBZJvwQyMS/
 2. 获邀加入社区成员微信群
-3. 开通GitHub相应仓库权限 
+3. 开通GitHub相应仓库权限
+
+如果你希望代表企业/社区等组织加入社区，请填写 社区伙伴申请 https://www.wenjuan.com/s/A3muIzK/  ，将有专人与您单独有联络。
 
 ## 内容创作与传播
 - 原创文章、分享、视频的制作及发布 
