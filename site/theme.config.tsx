@@ -5,7 +5,7 @@ import { useConfig } from 'nextra-theme-docs'
 import Footer from './components/Footer'
 
 const config: DocsThemeConfig = {
-  logo: '<span style="display:flex;"><img src="/icon.svg" alt="PECommunity"/> <span style="font-size: 24px;line-height:48px;padding-left:5px;">平台工程社区</span></span>',
+  logo: <span style="display:flex;"><img src="/icon.svg" alt="PECommunity"/><span style="font-size: 24px;line-height:48px;padding-left:5px;">平台工程社区</span></span>,
   project: {
     link: 'https://github.com/PECommunity/community'
   },
