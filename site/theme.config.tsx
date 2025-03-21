@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
     <>
       <span style={{display:'flex'}}>
         <img src="/icon.svg" alt="PECommunity"/>
-        <span style={{font-size:'24px',line-height:'48px',padding-left:'5px'}}>平台工程社区</span>
+        <span style={{ fontSize: '24px', lineHeight: '48px', paddingLeft: '5px' }}>平台工程社区</span>
       </span>
     </>),
   project: {
