@@ -1,11 +1,11 @@
 import withNextra from 'nextra';
 
-const withNextra = withNextra({
+const nextraConfig = withNextra({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.tsx',
 })
 
-module.exports = withNextra({
+module.exports = nextraConfig({
   webpack: (config, { buildId, dev }) => {
     config.resolve.symlinks = false
     return config
