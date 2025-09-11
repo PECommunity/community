@@ -40,7 +40,7 @@
             "footer": false
         }
     },
-    "pemm":{
+    "pemm": {
         "type": "page",
         "title": "平台成熟度评估",
         "theme": {
