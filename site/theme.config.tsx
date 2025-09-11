@@ -84,8 +84,8 @@ const config: DocsThemeConfig = {
   banner: {
     key: 'events',
     text: (
-      <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-open-source-summit-ai-dev-china/" target="_blank">
-        🎉 KubeCon + CloudNativeCon + Open Source Summit + AI_dev 中国·香港 2024-8-21~23. 了解更多 →
+      <a href="https://platformcon.com/" target="_blank">
+        🎉 PlatformCon 2026  2026-6-22~26. 了解更多 →
       </a>
     )
   },
