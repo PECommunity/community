@@ -47,7 +47,7 @@
             "sidebar": false,
             "toc": false,
             "breadcrumb": false,
-    }
+    },
     "about": {
         "type": "page",
         "title": "关于"
