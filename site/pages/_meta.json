@@ -46,7 +46,7 @@
         "theme": {
             "sidebar": false,
             "toc": false,
-            "breadcrumb": false,
+            "breadcrumb": false
         }
     },
     "about": {
