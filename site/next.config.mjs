@@ -1,18 +1,10 @@
-//import withNextra from 'nextra';
-//
-//const nextraConfig = withNextra({
-//  theme: 'nextra-theme-docs',
-//  themeConfig: './theme.config.tsx',
-//});
+import withNextra from 'nextra';
 
-const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',      
-  themeConfig: './theme.config.jsx' 
-})
+const nextraConfig = withNextra({
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.tsx',
+});
 
-module.exports = withNextra({
-  reactStrictMode: true,
-})
 
 export default nextraConfig({
   webpack: (config, { buildId, dev }) => {
