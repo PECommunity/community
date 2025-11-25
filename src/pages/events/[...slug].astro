@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import MainLayout from '../../layouts/main.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const events = await getCollection('events');
+  
+  return events
+    .filter((event: CollectionEntry<'events'>) => !event.id.includes('README'))
+    .map((event: CollectionEntry<'events'>) => ({
+      params: { slug: event.id.replace(/\.(md|mdx)$/, '') },
+      props: { event }
+    }));
+}
+
+interface Props {
+  event: CollectionEntry<'events'>;
+}
+
+const { event } = Astro.props;
+const { Content, headings } = await render(event);
+
+const formattedDate = event.data.eventDate?.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+const siteUrl = import.meta.env.SITE || 'https://pecommunity.cn';
+const canonicalUrl = `${siteUrl}/events/${event.id}`;
+---
+
+<MainLayout title={`${event.data.title} - 平台工程社区`} description={event.data.description || event.data.title}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={event.data.title} />
+    <meta property="og:description" content={event.data.description || event.data.title} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={event.data.title} />
+    <meta name="twitter:description" content={event.data.description || event.data.title} />
+  </Fragment>
+
+  <article class="container mx-auto px-4 py-8 max-w-4xl">
+    <header class="mb-8">
+      <div class="flex items-start justify-between mb-4">
+        <h1 class="text-4xl font-bold flex-1">{event.data.title}</h1>
+        {event.data.type && (
+          <span class="ml-4 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+            {event.data.type}
+          </span>
+        )}
+      </div>
+      
+      <div class="space-y-2 text-gray-600">
+        {formattedDate && (
+          <div class="flex items-center gap-2">
+            <span>📅</span>
+            <time>{formattedDate}</time>
+            {event.data.endDate && (
+              <span> - {event.data.endDate.toLocaleDateString('zh-CN')}</span>
+            )}
+          </div>
+        )}
+        
+        {event.data.location && (
+          <div class="flex items-center gap-2">
+            <span>📍</span>
+            <span>{event.data.location}</span>
+            {event.data.isOnline && <span class="text-blue-600">(在线活动)</span>}
+          </div>
+        )}
+        
+        {event.data.organizer && (
+          <div class="flex items-center gap-2">
+            <span>👥</span>
+            <span>组织者: {event.data.organizer}</span>
+          </div>
+        )}
+        
+        {event.data.registrationUrl && (
+          <div class="mt-4">
+            <a 
+              href={event.data.registrationUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              立即报名 →
+            </a>
+          </div>
+        )}
+      </div>
+    </header>
+
+    {headings.length > 0 && (
+      <aside class="mb-8 p-4 bg-gray-50 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2">目录</h2>
+        <nav>
+          <ul class="space-y-1">
+            {headings.map((heading: any) => (
+              <li style={`margin-left: ${(heading.depth - 1) * 1}rem`}>
+                <a href={`#${heading.slug}`} class="text-blue-600 hover:underline">
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+
+    <div class="typography-content max-w-none">
+      <Content />
+    </div>
+
+    <footer class="mt-12 pt-8 border-t">
+      <a href="/events" class="text-blue-600 hover:underline">
+        ← 返回活动列表
+      </a>
+    </footer>
+  </article>
+</MainLayout>

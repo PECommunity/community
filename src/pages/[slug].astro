@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import MainLayout from '../layouts/main.astro';
+
+export const getStaticPaths = (async () => {
+  const pagesCollection = await getCollection('pages');
+  
+  return pagesCollection.map((page: CollectionEntry<'pages'>) => ({
+    params: { slug: page.id.replace(/\.(md|mdx)$/, '') },
+    props: { page }
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: CollectionEntry<'pages'>;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const siteUrl = import.meta.env.SITE || 'https://pecommunity.cn';
+const canonicalUrl = `${siteUrl}/${page.id.replace(/\.(md|mdx)$/, '')}`;
+---
+
+<MainLayout 
+  title={`${page.data.title} - 平台工程社区`} 
+  description={page.data.description || page.data.title}
+>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={page.data.title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+  </Fragment>
+
+  <article class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 max-w-4xl">
+    <div class="typography-content max-w-none">
+      <Content />
+    </div>
+  </article>
+</MainLayout>

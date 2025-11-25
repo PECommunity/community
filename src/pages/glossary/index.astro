@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/main.astro';
+
+const allGlossary = await getCollection('glossary');
+
+// 过滤掉 index.mdx 和 README.mdx
+const glossaryEntries = allGlossary.filter(
+  (entry: CollectionEntry<'glossary'>) => !entry.id.includes('index') && !entry.id.includes('README') && !entry.data.draft
+);
+
+// 按标题排序
+const sortedEntries = glossaryEntries.sort((a: CollectionEntry<'glossary'>, b: CollectionEntry<'glossary'>) => {
+  return (a.data.title || '').localeCompare(b.data.title || '', 'zh-CN');
+});
+
+// 按首字母分组
+const groupedEntries = sortedEntries.reduce((acc: Record<string, CollectionEntry<'glossary'>[]>, entry: CollectionEntry<'glossary'>) => {
+  const firstChar = entry.data.title?.charAt(0).toUpperCase() || '#';
+  if (!acc[firstChar]) {
+    acc[firstChar] = [];
+  }
+  acc[firstChar].push(entry);
+  return acc;
+}, {} as Record<string, typeof sortedEntries>);
+---
+
+<Layout title="术语表">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-4xl font-bold mb-8">术语表</h1>
+    
+    <div class="space-y-8">
+      {Object.entries(groupedEntries).map(([letter, entries]) => (
+        <section>
+          <h2 class="text-2xl font-bold mb-4 text-blue-600">{letter}</h2>
+          <div class="grid gap-4 md:grid-cols-2">
+            {(entries as CollectionEntry<'glossary'>[]).map((entry: CollectionEntry<'glossary'>) => (
+              <a 
+                href={`/glossary/${entry.id.replace(/\.(md|mdx)$/, '')}`}
+                class="block p-4 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 class="text-lg font-semibold mb-2">{entry.data.title}</h3>
+                {entry.data.description && (
+                  <p class="text-sm text-gray-600">{entry.data.description}</p>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,140 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import MainLayout from '../../layouts/main.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles = await getCollection('articles');
+  
+  return articles
+    .filter((article: CollectionEntry<'articles'>) => !article.id.includes('README'))
+    .map((article: CollectionEntry<'articles'>) => ({
+      params: { slug: article.id.replace(/\.(md|mdx)$/, '') },
+      props: { article }
+    }));
+}
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { Content, headings } = await render(article);
+
+const formattedDate = article.data.pubDate?.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+const siteUrl = import.meta.env.SITE || 'https://pecommunity.cn';
+const canonicalUrl = `${siteUrl}/articles/${article.id}`;
+---
+
+<MainLayout title={`${article.data.title} - 平台工程社区`} description={article.data.description || article.data.title}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={article.data.title} />
+    <meta property="og:description" content={article.data.description || article.data.title} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+    {article.data.pubDate && (
+      <meta property="article:published_time" content={article.data.pubDate.toISOString()} />
+    )}
+    {article.data.updatedDate && (
+      <meta property="article:modified_time" content={article.data.updatedDate.toISOString()} />
+    )}
+    {article.data.author && (
+      <meta property="article:author" content={article.data.author} />
+    )}
+    {article.data.tags && article.data.tags.map((tag: string) => (
+      <meta property="article:tag" content={tag} />
+    ))}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={article.data.title} />
+    <meta name="twitter:description" content={article.data.description || article.data.title} />
+  </Fragment>
+
+  <article class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Article Header -->
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">{article.data.title}</h1>
+      
+      <div class="flex items-center gap-4 text-gray-600 mb-4">
+        <span>作者: {article.data.author || 'PECommunity'}</span>
+        {formattedDate && (
+          <>
+            <span>•</span>
+            <time>{formattedDate}</time>
+          </>
+        )}
+        {article.data.updatedDate && (
+          <>
+            <span>•</span>
+            <time>更新于: {article.data.updatedDate.toLocaleDateString('zh-CN')}</time>
+          </>
+        )}
+      </div>
+      
+      {article.data.tags && article.data.tags.length > 0 && (
+        <div class="flex gap-2 flex-wrap">
+          {article.data.tags.map((tag: string) => (
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+      
+      {article.data.originalUrl && (
+        <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+          <p class="text-sm">
+            本文翻译自: 
+            <a href={article.data.originalUrl} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+              {article.data.originalUrl}
+            </a>
+          </p>
+          {article.data.originalAuthor && (
+            <p class="text-sm mt-1">原作者: {article.data.originalAuthor}</p>
+          )}
+        </div>
+      )}
+    </header>
+
+    <!-- Table of Contents -->
+    {headings.length > 0 && (
+      <aside class="mb-8 p-4 bg-gray-50 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2">目录</h2>
+        <nav>
+          <ul class="space-y-1">
+            {headings.map((heading: any) => (
+              <li style={`margin-left: ${(heading.depth - 1) * 1}rem`}>
+                <a 
+                  href={`#${heading.slug}`}
+                  class="text-blue-600 hover:underline"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+
+    <!-- Article Content -->
+    <div class="typography-content max-w-none">
+      <Content />
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="mt-12 pt-8 border-t">
+      <div class="flex justify-between items-center">
+        <a href="/articles" class="text-blue-600 hover:underline">
+          ← 返回文章列表
+        </a>
+      </div>
+    </footer>
+  </article>
+</MainLayout>

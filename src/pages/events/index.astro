@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/main.astro';
+
+const allEvents = await getCollection('events');
+
+// 过滤掉 README.mdx
+const events = allEvents.filter(
+  (event: CollectionEntry<'events'>) => !event.id.includes('README') && !event.data.draft
+);
+
+// 查找 README.mdx 作为栏目简介
+const readme = allEvents.find((event: CollectionEntry<'events'>) => event.id === 'README.mdx');
+const { Content: ReadmeContent } = readme ? await readme.render() : { Content: null };
+
+// 按活动日期排序（如果没有活动日期则按发布日期）
+const sortedEvents = events.sort((a: CollectionEntry<'events'>, b: CollectionEntry<'events'>) => {
+  const dateA = a.data.eventDate?.valueOf() || a.data.pubDate?.valueOf() || 0;
+  const dateB = b.data.eventDate?.valueOf() || b.data.pubDate?.valueOf() || 0;
+  return dateB - dateA;
+});
+---
+
+<Layout title="活动">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    {ReadmeContent && (
+      <div class="typography-content mb-12 pb-8 border-b">
+        <ReadmeContent />
+      </div>
+    )}
+    
+    <div class="space-y-6">
+      {sortedEvents.map((event: CollectionEntry<'events'>) => (
+        <article class="border-b pb-6">
+          <a href={`/events/${event.id.replace(/\.(md|mdx)$/, '')}`} class="group">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+              {event.data.title}
+            </h2>
+          </a>
+          {event.data.description && (
+            <p class="text-gray-600 mb-2">{event.data.description}</p>
+          )}
+          <div class="flex items-center gap-4 text-sm text-gray-500">
+            {event.data.eventDate && (
+              <time datetime={event.data.eventDate.toISOString()}>
+                活动日期：{event.data.eventDate.toLocaleDateString('zh-CN', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            )}
+            {event.data.location && (
+              <span>📍 {event.data.location}</span>
+            )}
+            {event.data.isOnline && (
+              <span>🌐 线上活动</span>
+            )}
+          </div>
+          {event.data.registrationUrl && (
+            <a 
+              href={event.data.registrationUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-sm text-blue-600 hover:underline mt-2 inline-block"
+            >
+              报名链接 ↗
+            </a>
+          )}
+          {event.data.tags && event.data.tags.length > 0 && (
+            <div class="flex gap-2 mt-2">
+              {event.data.tags.map((tag: string) => (
+                <span class="text-xs bg-gray-100 px-2 py-1 rounded">{tag}</span>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>

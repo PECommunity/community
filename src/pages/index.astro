@@ -1,0 +1,67 @@
+---
+import MainLayout from '../layouts/main.astro';
+
+const heroButtons = [
+	{ title: '加入社区', link: 'https://www.wenjuan.com/s/UZBZJvwQyMS/', type: 'primary' },
+	{ title: '查看知识地图', link: '/mindmap', type: 'secondary' },
+];
+---
+
+<MainLayout>
+	<main>
+		<!-- Hero Section -->
+		<section class="min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+			<div class="container mx-auto px-4">
+				<div class="flex flex-col lg:flex-row-reverse items-center gap-8">
+					<div class="max-w-sm">
+						<img src="/hero.png" alt="平台工程社区" class="rounded-lg shadow-2xl" />
+					</div>
+					<div class="flex-1 text-center lg:text-left">
+						<h1 class="text-5xl font-bold mb-6">平台工程社区</h1>
+						<p class="text-xl mb-8 text-gray-600">中立的，非商业目的，以开放协作为中心的中文技术社区</p>
+						<div class="flex gap-4 justify-center lg:justify-start">
+							{heroButtons.map((btn) => (
+								<a
+									href={btn.link}
+									class={`px-6 py-3 rounded-lg font-medium transition-colors ${
+										btn.type === 'primary'
+											? 'bg-blue-600 text-white hover:bg-blue-700'
+											: 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+									}`}
+								>
+									{btn.title}
+								</a>
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section class="py-16 bg-white">
+			<div class="container mx-auto px-4">
+				<div class="grid md:grid-cols-3 gap-8">
+					<div class="text-center">
+						<div class="text-4xl mb-4">📚</div>
+						<h3 class="text-xl font-bold mb-2">丰富的内容</h3>
+						<p class="text-gray-600">每月洞察、原创文章、翻译内容</p>
+						<a href="/monthly" class="text-blue-600 hover:underline mt-2 inline-block">浏览文章 →</a>
+					</div>
+					<div class="text-center">
+						<div class="text-4xl mb-4">🎯</div>
+						<h3 class="text-xl font-bold mb-2">术语表</h3>
+						<p class="text-gray-600">平台工程相关术语和概念</p>
+						<a href="/glossary" class="text-blue-600 hover:underline mt-2 inline-block">查看术语 →</a>
+					</div>
+					<div class="text-center">
+						<div class="text-4xl mb-4">🎪</div>
+						<h3 class="text-xl font-bold mb-2">行业活动</h3>
+						<p class="text-gray-600">会议、沙龙、线上线下活动</p>
+						<a href="/events" class="text-blue-600 hover:underline mt-2 inline-block">查看活动 →</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</MainLayout>
