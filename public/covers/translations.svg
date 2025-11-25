@@ -1,0 +1,38 @@
+<svg width="1200" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="translationsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#translationsGrad)"/>
+  
+  <!-- 装饰性图案 -->
+  <circle cx="120" cy="100" r="70" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="1080" cy="300" r="90" fill="rgba(255,255,255,0.1)"/>
+  <path d="M 950,80 Q 970,60 990,80 Q 1010,100 990,120 Q 970,140 950,120 Q 930,100 950,80" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- 翻译图标 -->
+  <g transform="translate(500, 130)">
+    <!-- 左侧文档 -->
+    <rect x="-90" y="-60" width="80" height="100" rx="6" fill="rgba(255,255,255,0.95)"/>
+    <text x="-50" y="-30" font-family="monospace" font-size="20" fill="#10B981" text-anchor="middle">En</text>
+    <rect x="-75" y="-10" width="50" height="4" rx="2" fill="#6EE7B7"/>
+    <rect x="-75" y="0" width="50" height="4" rx="2" fill="#6EE7B7"/>
+    <rect x="-75" y="10" width="40" height="4" rx="2" fill="#6EE7B7"/>
+    
+    <!-- 箭头 -->
+    <path d="M -5,-10 L 20,-10 L 20,-20 L 35,0 L 20,20 L 20,10 L -5,10 Z" fill="rgba(255,255,255,0.9)"/>
+    
+    <!-- 右侧文档 -->
+    <rect x="45" y="-60" width="80" height="100" rx="6" fill="rgba(255,255,255,0.95)"/>
+    <text x="85" y="-30" font-family="sans-serif" font-size="20" fill="#10B981" text-anchor="middle">中文</text>
+    <rect x="60" y="-10" width="50" height="4" rx="2" fill="#6EE7B7"/>
+    <rect x="60" y="0" width="50" height="4" rx="2" fill="#6EE7B7"/>
+    <rect x="60" y="10" width="40" height="4" rx="2" fill="#6EE7B7"/>
+  </g>
+  
+  <!-- 标题文字 -->
+  <text x="600" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">翻译文章</text>
+  <text x="600" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">Translations</text>
+</svg>

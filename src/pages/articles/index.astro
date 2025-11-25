@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/main.astro';
 
@@ -12,7 +12,7 @@ const articles = allArticles.filter(
 
 // 查找 README.mdx 作为栏目简介
 const readme = allArticles.find((article: CollectionEntry<'articles'>) => article.id === 'README.mdx');
-const { Content: ReadmeContent } = readme ? await readme.render() : { Content: null };
+const { Content: ReadmeContent } = readme ? await render(readme) : { Content: null };
 
 // 按发布日期排序
 const sortedArticles = articles.sort((a: CollectionEntry<'articles'>, b: CollectionEntry<'articles'>) => {
@@ -24,6 +24,12 @@ const sortedArticles = articles.sort((a: CollectionEntry<'articles'>, b: Collect
 
 <Layout title="原创文章">
   <div class="container mx-auto px-4 py-8 max-w-4xl">
+    {readme && readme.data.cover && (
+      <div class="mb-8 rounded-lg overflow-hidden">
+        <img src={readme.data.cover} alt={readme.data.title} class="w-full h-auto" />
+      </div>
+    )}
+    
     {ReadmeContent && (
       <div class="typography-content mb-12 pb-8 border-b">
         <ReadmeContent />

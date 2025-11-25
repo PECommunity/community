@@ -1,9 +1,11 @@
 ---
 title: 应用现代化趋势：平淡之美 ③
+description: Google Cloud总监Richard Seroter探讨技术持续性和可靠性的重要性，强调选择成熟稳定的技术栈（如Kubernetes、PostgreSQL、Java）而非追逐最新潮流
 author: Richard Seroter
 translator: 崔
-date: 2023-08-23
-originalLink: https://cloud.google.com/blog/products/application-modernization/richard-seroter-on-the-need-to-durable-systems
+pubDate: 2023-08-23
+originalUrl: https://cloud.google.com/blog/products/application-modernization/richard-seroter-on-the-need-to-durable-systems
+tags: ['Google Cloud', '技术选型', '系统可靠性', '平台工程', '开源技术', '应用现代化']
 ---
 
 # 应用现代化趋势：平淡之美 ③

@@ -1,7 +1,9 @@
 ---
 title: CNOE：构建内部开发者平台IDP的开源参考框架
+description: Adobe、AWS、Autodesk、Salesforce 和 Twilio 联合推出云原生卓越运营（CNOE）开源计划，为构建内部开发者平台提供技术选择指导和最佳实践参考框架
 author: PECommunity平台工程社区
-date: 2023-12-25
+pubDate: 2023-12-25
+tags: ['CNOE', '内部开发者平台', 'IDP', '开源', '平台工程', '参考架构']
 ---
 
 # CNOE：构建内部开发者平台IDP的开源参考框架

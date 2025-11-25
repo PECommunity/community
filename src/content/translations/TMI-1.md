@@ -1,9 +1,11 @@
 ---
 title: 应用现代化趋势：左移已经过时，下移才是未来
+description: Google Cloud总监Richard Seroter分享平台工程理念，提出“下移”而非“左移”的观点，通过平台抽象和托管服务减轻开发者认知负担，让他们专注于创造而非苦苦挣扎
 author: Richard Seroter
 translator: 杨振涛
-date: 2023-06-09
-originalLink: https://cloud.google.com/blog/products/application-development/richard-seroter-on-shifting-down-vs-shifting-left
+pubDate: 2023-06-09
+originalUrl: https://cloud.google.com/blog/products/application-development/richard-seroter-on-shifting-down-vs-shifting-left
+tags: ['Google Cloud', '平台工程', 'DevOps', '开发者体验', '认知负担', '应用现代化']
 ---
 
 # 应用现代化趋势：左移已经过时，下移才是未来

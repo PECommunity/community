@@ -1,8 +1,9 @@
 ---
 title: HashiCorp白皮书：平台团队最佳实践
+description: HashiCorp发布平台工程白皮书，详细介绍云采用的三个阶段、平台团队的职责范围、组织考虑因素以及确保平台成功的最佳实践
 author: HashiCorp
-date: 2023-11-29
-originalLink: https://www.hashicorp.com/resources/platform-teams-best-practices
+pubDate: 2023-11-29
+tags: ['HashiCorp', '白皮书', '平台团队', '最佳实践', '云采用', '平台工程']
 ---
 
 HashiCorp近期发布了一份平台工程相关的白皮书：《Platform Teams Best Practices》，旨在帮助开发人员了解上云的各个阶段、平台团队所扮演的角色，以及如何建立和确保这些团队及其创建的平台能够成功。

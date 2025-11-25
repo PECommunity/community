@@ -1,9 +1,11 @@
 ---
 title: 应用现代化趋势：您的平台工程项目注定失败吗？ ②
+description: Google Cloud产品经理Alex McWilliam分享如何避免平台工程项目失败，强调需要清楚三个基本问题：平台为谁而建、谁来建设以及如何度量平台成功
 author: Alex McWilliam
 translator: 崔
-date: 2023-06-30
-originalLink: https://cloud.google.com/blog/products/application-modernization/alex-mcwilliam-on-how-to-avoid-platform-engineering-project-flops 
+pubDate: 2023-06-30
+originalUrl: https://cloud.google.com/blog/products/application-modernization/alex-mcwilliam-on-how-to-avoid-platform-engineering-project-flops
+tags: ['Google Cloud', '平台工程', '产品管理', '用户研究', '团队建设', '应用现代化']
 ---
 
 # 应用现代化趋势：您的平台工程项目注定失败吗？ ②

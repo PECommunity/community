@@ -1,7 +1,9 @@
 ---
 title: Platform Engineering Day议程公布 KubeCon + CloudNativeCon Europe 2024
+description: CNCF主办的平台工程日（Platform Engineering Day）将于2024年3月19日在欧洲举行，汇集全球平台工程专家分享最佳实践和创新思路
 author: PECommunity平台工程社区
-date: 2024-1-15
+pubDate: 2024-01-15
+tags: ['PlatformCon', 'KubeCon', 'CloudNativeCon', '平台工程', 'CNCF', '会议']
 ---
 
 # Platform Engineering Day议程公布 KubeCon + CloudNativeCon Europe 2024

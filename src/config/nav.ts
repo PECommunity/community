@@ -15,12 +15,12 @@ export const navConfig: NavConfig = {
       href: "/",
     },
     {
-      title: "原创",
-      href: "/articles",
-    },
-    {
       title: "月刊",
       href: "/monthly",
+    },
+    {
+      title: "原创",
+      href: "/articles",
     },
     {
       title: "翻译",
