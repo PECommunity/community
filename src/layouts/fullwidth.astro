@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import { SiteNav } from '../components/SiteNav';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { 
+	title = '平台工程社区 - PECommunity',
+	description = '中立的，非商业目的，以开放协作为中心的中文技术社区'
+} = Astro.props;
+
+const siteUrl = import.meta.env.SITE || 'https://pecommunity.cn';
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		
+		<!-- Open Graph -->
+		<meta property="og:site_name" content="平台工程社区" />
+		<meta property="og:locale" content="zh_CN" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:site" content="@pecommunity" />
+		
+		<title>{title}</title>
+		
+		<!-- Additional head content from pages -->
+		<slot name="head" />
+	</head>
+	<body class="flex flex-col h-screen overflow-hidden">
+		<SiteNav client:load />
+		<div class="flex-1 w-full overflow-hidden">
+			<slot />
+		</div>
+	</body>
+</html>

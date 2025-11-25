@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/main.astro';
+import { Typography } from '../../components/Typography';
+import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const translations = await getCollection('translations');
+  
+  return translations
+    .filter((article: CollectionEntry<'translations'>) => !article.id.includes('README'))
+    .map((article: CollectionEntry<'translations'>) => ({
+      params: { slug: article.id.replace(/\.(md|mdx)$/, '') },
+      props: { article },
+    }));
+}
+
+interface Props {
+  article: CollectionEntry<'translations'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const formattedDate = article.data.pubDate?.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout title={article.data.title}>
+  <article class="container mx-auto px-4 py-8 max-w-4xl">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">{article.data.title}</h1>
+      {article.data.description && (
+        <p class="text-xl text-gray-600 mb-4">{article.data.description}</p>
+      )}
+      <div class="flex flex-col gap-2 text-sm text-gray-600 mb-4">
+        {article.data.pubDate && (
+          <time datetime={article.data.pubDate.toISOString()}>
+            发布日期：{formattedDate}
+          </time>
+        )}
+        {article.data.authors && article.data.authors.length > 0 && (
+          <span>原作者：{article.data.authors.join('、')}</span>
+        )}
+        {article.data.translators && article.data.translators.length > 0 && (
+          <span>译者：{article.data.translators.join('、')}</span>
+        )}
+        {article.data.editors && article.data.editors.length > 0 && (
+          <span>编辑：{article.data.editors.join('、')}</span>
+        )}
+        {article.data.reviewers && article.data.reviewers.length > 0 && (
+          <span>审校：{article.data.reviewers.join('、')}</span>
+        )}
+        {article.data.originalUrl && (
+          <a 
+            href={article.data.originalUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="text-blue-600 hover:underline"
+          >
+            查看原文 ↗
+          </a>
+        )}
+      </div>
+      {article.data.tags && article.data.tags.length > 0 && (
+        <div class="flex gap-2">
+          {article.data.tags.map((tag: string) => (
+            <span class="text-xs bg-gray-100 px-2 py-1 rounded">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+    
+    <Typography>
+      <Content />
+    </Typography>
+  </article>
+</Layout>

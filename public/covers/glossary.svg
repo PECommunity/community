@@ -1,0 +1,50 @@
+<svg width="1200" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="glossaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DB2777;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#glossaryGrad)"/>
+  
+  <!-- 装饰性图案 -->
+  <circle cx="130" cy="100" r="75" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="1070" cy="300" r="95" fill="rgba(255,255,255,0.1)"/>
+  <rect x="200" y="280" width="50" height="50" rx="8" fill="rgba(255,255,255,0.1)" transform="rotate(20 225 305)"/>
+  <circle cx="900" cy="70" r="45" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- 书本图标 -->
+  <g transform="translate(500, 130)">
+    <!-- 书本主体 -->
+    <rect x="-75" y="-70" width="150" height="120" rx="8" fill="rgba(255,255,255,0.95)"/>
+    
+    <!-- 书脊线 -->
+    <line x1="0" y1="-70" x2="0" y2="50" stroke="#EC4899" stroke-width="3"/>
+    
+    <!-- 左页 -->
+    <g fill="#F9A8D4">
+      <text x="-50" y="-35" font-family="serif" font-size="28" font-weight="bold">A</text>
+      <rect x="-60" y="-15" width="50" height="4" rx="2"/>
+      <rect x="-60" y="-5" width="45" height="3" rx="1.5"/>
+      <rect x="-60" y="5" width="48" height="3" rx="1.5"/>
+      <rect x="-60" y="15" width="42" height="3" rx="1.5"/>
+    </g>
+    
+    <!-- 右页 -->
+    <g fill="#F9A8D4">
+      <text x="15" y="-35" font-family="serif" font-size="28" font-weight="bold">术</text>
+      <rect x="10" y="-15" width="50" height="4" rx="2"/>
+      <rect x="10" y="-5" width="48" height="3" rx="1.5"/>
+      <rect x="10" y="5" width="45" height="3" rx="1.5"/>
+      <rect x="10" y="15" width="50" height="3" rx="1.5"/>
+    </g>
+    
+    <!-- 书签 -->
+    <rect x="-5" y="-70" width="10" height="85" fill="#FDE68A" opacity="0.8"/>
+    <path d="M -5,15 L 0,10 L 5,15" fill="#FDE68A" opacity="0.8"/>
+  </g>
+  
+  <!-- 标题文字 -->
+  <text x="600" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">术语表</text>
+  <text x="600" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="middle">Glossary</text>
+</svg>

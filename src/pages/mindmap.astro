@@ -1,0 +1,14 @@
+---
+import FullwidthLayout from '../layouts/fullwidth.astro';
+
+const title = '知识地图';
+---
+
+<FullwidthLayout title={title}>
+	<iframe
+		src="https://pe-mindmap.netlify.app"
+		title={title}
+		allow="fullscreen"
+		class="w-full h-full border-0"
+	/>
+</FullwidthLayout>

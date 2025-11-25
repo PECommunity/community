@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import MainLayout from '../../layouts/main.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const glossary = await getCollection('glossary');
+  
+  return glossary
+    .filter((entry: CollectionEntry<'glossary'>) => !entry.id.includes('README') && !entry.id.includes('index'))
+    .map((entry: CollectionEntry<'glossary'>) => ({
+      params: { slug: entry.id.replace(/\.(md|mdx)$/, '') },
+      props: { entry }
+    }));
+}
+
+interface Props {
+  entry: CollectionEntry<'glossary'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const siteUrl = import.meta.env.SITE || 'https://pecommunity.cn';
+const canonicalUrl = `${siteUrl}/glossary/${entry.id}`;
+---
+
+<MainLayout title={`${entry.data.title} - 术语表 - 平台工程社区`} description={entry.data.description || entry.data.title}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={entry.data.title} />
+    <meta property="og:description" content={entry.data.description || entry.data.title} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={entry.data.title} />
+    <meta name="twitter:description" content={entry.data.description || entry.data.title} />
+  </Fragment>
+
+  <article class="container mx-auto px-4 py-8 max-w-4xl">
+    <header class="mb-8">
+      <div class="mb-4">
+        <a href="/glossary" class="text-blue-600 hover:underline text-sm">
+          ← 返回术语表
+        </a>
+      </div>
+      <h1 class="text-4xl font-bold mb-4">{entry.data.title}</h1>
+      {entry.data.description && (
+        <p class="text-xl text-gray-600">{entry.data.description}</p>
+      )}
+    </header>
+
+    {headings.length > 0 && (
+      <aside class="mb-8 p-4 bg-gray-50 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2">目录</h2>
+        <nav>
+          <ul class="space-y-1">
+            {headings.map((heading: any) => (
+              <li style={`margin-left: ${(heading.depth - 1) * 1}rem`}>
+                <a href={`#${heading.slug}`} class="text-blue-600 hover:underline">
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+
+    <div class="typography-content max-w-none">
+      <Content />
+    </div>
+
+    <footer class="mt-12 pt-8 border-t">
+      <a href="/glossary" class="text-blue-600 hover:underline">
+        ← 返回术语表
+      </a>
+    </footer>
+  </article>
+</MainLayout>

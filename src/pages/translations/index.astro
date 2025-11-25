@@ -1,0 +1,88 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/main.astro';
+
+const allTranslations = await getCollection('translations');
+
+// 过滤掉 README.mdx
+const translations = allTranslations.filter(
+  (article: CollectionEntry<'translations'>) => !article.id.includes('README') && !article.data.draft
+);
+
+// 查找 README.mdx 作为栏目简介
+const readme = allTranslations.find((article: CollectionEntry<'translations'>) => article.id === 'README.mdx');
+const { Content: ReadmeContent } = readme ? await render(readme) : { Content: null };
+
+// 按发布日期排序
+const sortedArticles = translations.sort((a: CollectionEntry<'translations'>, b: CollectionEntry<'translations'>) => {
+  const dateA = a.data.pubDate?.valueOf() || 0;
+  const dateB = b.data.pubDate?.valueOf() || 0;
+  return dateB - dateA;
+});
+---
+
+<Layout title="翻译文章">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    {readme && readme.data.cover && (
+      <div class="mb-8 rounded-lg overflow-hidden">
+        <img src={readme.data.cover} alt={readme.data.title} class="w-full h-auto" />
+      </div>
+    )}
+    
+    {ReadmeContent && (
+      <div class="typography-content mb-12 pb-8 border-b">
+        <ReadmeContent />
+      </div>
+    )}
+    
+    <div class="space-y-6">
+      {sortedArticles.map((article: CollectionEntry<'translations'>) => (
+        <article class="border-b pb-6">
+          <a href={`/translations/${article.id.replace(/\.(md|mdx)$/, '')}`} class="group">
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+              {article.data.title}
+            </h2>
+          </a>
+          {article.data.description && (
+            <p class="text-gray-600 mb-2">{article.data.description}</p>
+          )}
+          <div class="flex items-center gap-4 text-sm text-gray-500">
+            {article.data.pubDate && (
+              <time datetime={article.data.pubDate.toISOString()}>
+                {article.data.pubDate.toLocaleDateString('zh-CN', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            )}
+            {article.data.translator && (
+              <span>译者：{article.data.translator}</span>
+            )}
+            {article.data.originalAuthor && (
+              <span>原作者：{article.data.originalAuthor}</span>
+            )}
+          </div>
+          {article.data.originalUrl && (
+            <a 
+              href={article.data.originalUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-sm text-blue-600 hover:underline mt-2 inline-block"
+            >
+              查看原文 ↗
+            </a>
+          )}
+          {article.data.tags && article.data.tags.length > 0 && (
+            <div class="flex gap-2 mt-2">
+              {article.data.tags.map((tag: string) => (
+                <span class="text-xs bg-gray-100 px-2 py-1 rounded">{tag}</span>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>
