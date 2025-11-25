@@ -122,34 +122,52 @@
 /* Typography styles inspired by shadcn */
 .typography-content {
   @apply text-foreground text-lg;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .typography-content h1 {
   @apply scroll-m-20 text-5xl font-extrabold tracking-tight;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content h2 {
   @apply mt-10 scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight transition-colors first:mt-0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content h3 {
   @apply mt-8 scroll-m-20 text-3xl font-semibold tracking-tight;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content h4 {
   @apply mt-6 scroll-m-20 text-2xl font-semibold tracking-tight;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content p {
   @apply leading-8 text-lg [&:not(:first-child)]:mt-6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content a {
   @apply font-medium text-primary underline underline-offset-4 hover:opacity-80 transition-opacity;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content blockquote {
   @apply mt-6 border-l-2 border-border pl-6 italic text-muted-foreground;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content ul {
@@ -160,20 +178,34 @@
   @apply my-6 ml-6 list-decimal [&>li]:mt-2;
 }
 
+.typography-content li {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 .typography-content code {
   @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content pre {
   @apply my-6 overflow-x-auto rounded-lg bg-muted p-4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content pre code {
   @apply bg-transparent p-0;
+  white-space: pre-wrap;
 }
 
 .typography-content table {
   @apply w-full my-6;
+  table-layout: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content thead {
@@ -186,6 +218,8 @@
 
 .typography-content th {
   @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content tbody tr {
@@ -194,6 +228,8 @@
 
 .typography-content td {
   @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .typography-content img {

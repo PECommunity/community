@@ -12,7 +12,9 @@ const articles = defineCollection({
     description: z.string().optional(),
     pubDate: z.coerce.date().optional(),
     updatedDate: z.coerce.date().optional(),
-    author: z.string().default('PECommunity'),
+    authors: z.array(z.string()).optional(),
+    editors: z.array(z.string()).optional(),
+    reviewers: z.array(z.string()).optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   })
@@ -29,7 +31,8 @@ const monthly = defineCollection({
     description: z.string().optional(),
     pubDate: z.coerce.date().optional(),
     updatedDate: z.coerce.date().optional(),
-    author: z.string().default('PECommunity'),
+    editors: z.array(z.string()).optional(),
+    reviewers: z.array(z.string()).optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   })
@@ -46,10 +49,11 @@ const translations = defineCollection({
     description: z.string().optional(),
     pubDate: z.coerce.date().optional(),
     updatedDate: z.coerce.date().optional(),
-    author: z.string().default('PECommunity'),
     originalUrl: z.string().url().optional(),
-    originalAuthor: z.string().optional(),
-    translator: z.string().optional(),
+    authors: z.array(z.string()).optional(),
+    translators: z.array(z.string()).optional(),
+    editors: z.array(z.string()).optional(),
+    reviewers: z.array(z.string()).optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   })
@@ -69,6 +73,7 @@ const events = defineCollection({
     location: z.string().optional(),
     isOnline: z.boolean().default(false),
     registrationUrl: z.string().url().optional(),
+    organizers: z.array(z.string()).optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   })

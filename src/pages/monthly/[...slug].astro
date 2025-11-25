@@ -37,14 +37,17 @@ const formattedDate = article.data.pubDate?.toLocaleDateString('zh-CN', {
       {article.data.description && (
         <p class="text-xl text-gray-600 mb-4">{article.data.description}</p>
       )}
-      <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+      <div class="flex flex-col gap-2 text-sm text-gray-500 mb-4">
         {article.data.pubDate && (
           <time datetime={article.data.pubDate.toISOString()}>
             {formattedDate}
           </time>
         )}
-        {article.data.author && (
-          <span>作者：{article.data.author}</span>
+        {article.data.editors && article.data.editors.length > 0 && (
+          <span>编辑：{article.data.editors.join('、')}</span>
+        )}
+        {article.data.reviewers && article.data.reviewers.length > 0 && (
+          <span>审校：{article.data.reviewers.join('、')}</span>
         )}
       </div>
       {article.data.tags && article.data.tags.length > 0 && (

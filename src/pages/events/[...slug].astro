@@ -74,10 +74,10 @@ const canonicalUrl = `${siteUrl}/events/${event.id}`;
           </div>
         )}
         
-        {event.data.organizer && (
+        {event.data.organizers && event.data.organizers.length > 0 && (
           <div class="flex items-center gap-2">
             <span>👥</span>
-            <span>组织者: {event.data.organizer}</span>
+            <span>主办方: {event.data.organizers.join('、')}</span>
           </div>
         )}
         

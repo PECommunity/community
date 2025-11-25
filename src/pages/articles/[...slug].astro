@@ -61,19 +61,35 @@ const canonicalUrl = `${siteUrl}/articles/${article.id}`;
     <header class="mb-8">
       <h1 class="text-4xl font-bold mb-4">{article.data.title}</h1>
       
-      <div class="flex items-center gap-4 text-gray-600 mb-4">
-        <span>作者: {article.data.author || 'PECommunity'}</span>
-        {formattedDate && (
-          <>
-            <span>•</span>
-            <time>{formattedDate}</time>
-          </>
+      <div class="flex flex-col gap-2 text-gray-600 mb-4">
+        <div class="flex items-center gap-4 flex-wrap">
+          {article.data.authors && article.data.authors.length > 0 ? (
+            <span>作者: {article.data.authors.join('、')}</span>
+          ) : (
+            <span>作者: PECommunity</span>
+          )}
+          {formattedDate && (
+            <>
+              <span>•</span>
+              <time>{formattedDate}</time>
+            </>
+          )}
+          {article.data.updatedDate && (
+            <>
+              <span>•</span>
+              <time>更新于: {article.data.updatedDate.toLocaleDateString('zh-CN')}</time>
+            </>
+          )}
+        </div>
+        {article.data.editors && article.data.editors.length > 0 && (
+          <div class="text-sm">
+            <span>编辑: {article.data.editors.join('、')}</span>
+          </div>
         )}
-        {article.data.updatedDate && (
-          <>
-            <span>•</span>
-            <time>更新于: {article.data.updatedDate.toLocaleDateString('zh-CN')}</time>
-          </>
+        {article.data.reviewers && article.data.reviewers.length > 0 && (
+          <div class="text-sm">
+            <span>审校: {article.data.reviewers.join('、')}</span>
+          </div>
         )}
       </div>
       
