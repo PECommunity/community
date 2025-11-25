@@ -31,12 +31,8 @@ export const navConfig: NavConfig = {
       href: "/events",
     },
     {
-      title: "术语表",
-      href: "/glossary",
-    },
-    {
       title: "知识地图",
-      href: "/mindmap",
+      href: "/glossary",
     },
     {
       title: "PEMM",

@@ -1,5 +1,14 @@
 ---
 title: 开发者控制面
+titleEn: Developer Control Plane
+abbreviation: DCP
+description: 开发者与底层基础设施交互的统一接口层，提供标准化的 API 和工作流
+category: platform-product
+relatedTerms:
+  - 内部开发者平台
+  - 开发者体验
+  - 基础设施即代码
+  - 平台工程
 ---
 
 # 开发者控制面
@@ -9,8 +18,22 @@ title: 开发者控制面
 
 ## 定义
 
-待补充。
+开发者控制面（Developer Control Plane）是内部开发者平台的核心组件，提供开发者与底层基础设施、工具链和服务之间交互的统一接口层。它抽象了底层技术的复杂性，为开发者提供标准化、自助式的 API 和工作流。
+
+开发者控制面通常包括：
+
+- **统一 API 层**：提供一致的接口访问各种平台能力
+- **服务目录**：可用服务和资源的集中展示
+- **工作流编排**：自动化常见的开发任务和流程
+- **资源管理**：应用、服务和基础设施的生命周期管理
+- **权限控制**：基于角色的访问控制和审计
+
+与传统的基础设施管理工具不同，开发者控制面专注于开发者体验，通过声明式配置和自助服务降低认知负荷。
 
 ## 参考资料
 
-待补充。
+| 名称 | 作者 / 组织 | 简介 |
+| ---- | ----------- | ---- |
+| [What is a Developer Control Plane?](https://humanitec.com/blog/what-is-a-developer-control-plane) | Humanitec | 开发者控制面的概念和架构 |
+| [The Developer Control Plane](https://www.getambassador.io/developer-control-plane) | Ambassador Labs | 云原生应用交付的控制面 |
+| [Building a Developer Control Plane](https://www.cncf.io/blog/2023/06/13/building-a-developer-control-plane/) | CNCF | 如何构建开发者控制面 |

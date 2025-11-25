@@ -1,5 +1,14 @@
 ---
 title: 动态配置管理
+titleEn: Dynamic Configuration Management
+abbreviation: DCM
+description: 在运行时动态调整应用配置，无需重启或重新部署系统
+category: technical-practice
+relatedTerms:
+  - 基础设施即代码
+  - 内部开发者平台
+  - 开发者控制面
+  - 平台工程
 ---
 
 # 动态配置管理
@@ -9,8 +18,40 @@ title: 动态配置管理
 
 ## 定义
 
-待补充。
+动态配置管理（Dynamic Configuration Management）是指在应用程序运行时，能够动态读取、更新和应用配置变更，而无需重启服务或重新部署系统的能力。这是现代云原生应用和微服务架构的重要特性。
+
+核心能力：
+
+- **实时更新**：配置变更立即生效，无需重启
+- **集中管理**：所有配置在一个中心位置统一管理
+- **版本控制**：配置变更历史可追溯
+- **环境隔离**：不同环境的配置独立管理
+- **安全管理**：敏感配置加密存储
+- **变更通知**：配置更新时通知相关服务
+
+主要优势：
+
+- **提高敏捷性**：快速响应业务变化
+- **降低风险**：避免重启带来的服务中断
+- **简化运维**：减少配置变更的复杂度
+- **支持 A/B 测试**：灵活控制功能开关
+- **快速回滚**：配置问题可快速恢复
+
+常见工具和服务：
+- Spring Cloud Config
+- Consul
+- etcd
+- Apollo
+- Nacos
+- AWS AppConfig
+- Azure App Configuration
+
+在平台工程中，动态配置管理是内部开发者平台的重要组成部分，帮助开发团队更灵活地管理应用配置。
 
 ## 参考资料
 
-待补充。
+| 名称 | 作者 / 组织 | 简介 |
+| ---- | ----------- | ---- |
+| [Dynamic Configuration](https://microservices.io/patterns/externalized-configuration.html) | Microservices.io | 微服务中的配置管理 |
+| [Configuration Management](https://12factor.net/config) | 12-Factor App | 配置管理的最佳实践 |
+| [Spring Cloud Config](https://spring.io/projects/spring-cloud-config) | Spring | 分布式配置管理解决方案 |

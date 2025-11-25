@@ -26,7 +26,7 @@ const siteUrl = import.meta.env.SITE || 'https://pecommunity.cn';
 const canonicalUrl = `${siteUrl}/glossary/${entry.id}`;
 ---
 
-<MainLayout title={`${entry.data.title} - 术语表 - 平台工程社区`} description={entry.data.description || entry.data.title}>
+<MainLayout title={`${entry.data.title} - 知识地图 - 平台工程社区`} description={entry.data.description || entry.data.title}>
   <Fragment slot="head">
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={entry.data.title} />
@@ -42,7 +42,7 @@ const canonicalUrl = `${siteUrl}/glossary/${entry.id}`;
     <header class="mb-8">
       <div class="mb-4">
         <a href="/glossary" class="text-blue-600 hover:underline text-sm">
-          ← 返回术语表
+          ← 返回知识地图
         </a>
       </div>
       <h1 class="text-4xl font-bold mb-4">{entry.data.title}</h1>
@@ -74,7 +74,7 @@ const canonicalUrl = `${siteUrl}/glossary/${entry.id}`;
 
     <footer class="mt-12 pt-8 border-t">
       <a href="/glossary" class="text-blue-600 hover:underline">
-        ← 返回术语表
+        ← 返回知识地图
       </a>
     </footer>
   </article>

@@ -1,5 +1,14 @@
 ---
 title: 基础设施即代码
+titleEn: Infrastructure as Code
+abbreviation: IaC
+description: 使用代码来定义、配置和管理基础设施的实践方法
+category: technical-practice
+relatedTerms:
+  - 平台工程
+  - 内部开发者平台
+  - 动态配置管理
+  - 开发者控制面
 ---
 
 # 基础设施即代码
@@ -9,8 +18,23 @@ title: 基础设施即代码
 
 ## 定义
 
-待补充。
+基础设施即代码（Infrastructure as Code，IaC）是一种通过代码来定义、配置、部署和管理基础设施的实践方法。它将基础设施的配置和管理过程自动化，使用版本控制、测试和持续集成等软件工程实践。
+
+IaC 的核心特征：
+
+- **声明式配置**：描述期望的基础设施状态，而非具体操作步骤
+- **版本控制**：基础设施配置可以像应用代码一样进行版本管理
+- **可重复性**：相同的代码可以在不同环境中创建一致的基础设施
+- **自动化**：通过 CI/CD 流水线自动化基础设施的变更
+- **可测试性**：基础设施配置可以进行单元测试和集成测试
+
+常见的 IaC 工具包括 Terraform、Pulumi、CloudFormation、Ansible 等。在平台工程实践中，IaC 是构建内部开发者平台的基础技术之一。
 
 ## 参考资料
 
-待补充。
+| 名称 | 作者 / 组织 | 简介 |
+| ---- | ----------- | ---- |
+| [What is Infrastructure as Code?](https://www.redhat.com/en/topics/automation/what-is-infrastructure-as-code-iac) | Red Hat | IaC 的基本概念和实践 |
+| [Infrastructure as Code](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code) | Microsoft | 微软对 IaC 的介绍 |
+| [What Is Infrastructure as Code?](https://www.hashicorp.com/resources/what-is-infrastructure-as-code) | HashiCorp | Terraform 创建者对 IaC 的解释 |
+| [Infrastructure as Code](https://martinfowler.com/bliki/InfrastructureAsCode.html) | Martin Fowler | 马丁·福勒对 IaC 的定义 |

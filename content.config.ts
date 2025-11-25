@@ -87,7 +87,18 @@ const glossary = defineCollection({
   }),
   schema: z.object({
     title: z.string(),
+    titleEn: z.string().optional(),
+    abbreviation: z.string().optional(),
     description: z.string().optional(),
+    category: z.enum([
+      'core-concept',      // 核心概念
+      'platform-product',  // 平台产品
+      'team-role',         // 团队角色
+      'methodology',       // 方法论
+      'user-experience',   // 用户体验
+      'technical-practice' // 技术实践
+    ]).optional(),
+    relatedTerms: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   })
