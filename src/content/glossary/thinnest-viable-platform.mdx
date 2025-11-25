@@ -1,19 +1,51 @@
 ---
 title: 最薄可行平台
+titleEn: Thinnest Viable Platform
+abbreviation: TVP
+description: 仅提供必要服务的精简平台，避免过度设计和过度服务
+category: methodology
+relatedTerms:
+  - 平台团队
+  - 团队拓扑
+  - 认知负荷
+  - 内部开发者平台
+  - 平台工程
 ---
 
 # 最薄可行平台
 
 - **缩写**：TVP
-- **英文名称**：Thinnest viable platform
+- **英文名称**：Thinnest Viable Platform
 
 ## 定义
 
-待补充。
+最薄可行平台（Thinnest Viable Platform，TVP）是 Team Topologies 中提出的概念，指的是一个精简的平台，它仅提供必要的服务和工具，以满足流式对齐团队的需求，同时保持平台的简洁和易用。
+
+核心原则：
+
+- **最小化原则**：只提供真正必要的能力，避免功能膨胀
+- **降低认知负荷**：让应用团队专注于业务价值，而非基础设施
+- **持续进化**：根据用户反馈逐步增加功能
+- **自助服务**：提供清晰的 API 和文档，减少人工干预
+- **可组合性**：平台服务可以灵活组合使用
+
+TVP 的目标是找到平台能力和团队自主性之间的平衡：
+
+- **过薄**：平台提供不足，团队需要自己解决太多基础设施问题
+- **过厚**：平台功能过多，增加学习和维护成本
+- **恰当好**：最薄可行平台的目标状态
+
+实现 TVP 需要：
+
+1. 深入理解用户需求和痛点
+2. 优先解决普遍性问题
+3. 提供黄金路径而非强制规则
+4. 持续收集反馈并迭代优化
 
 ## 参考资料
 
-| 名称                                                                                                                                                     | 作者 / 组织                  | 简介 |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ---- |
-| [What is a Thinnest Viable Platform (TVP)?](https://teamtopologies.com/key-concepts-content/what-is-a-thinnest-viable-platform-tvp)                      | Team Topologies              |      |
-| [Monoliths vs Microservices is Missing the Point—Start with Team Cognitive Load](https://itrevolution.com/articles/team-cognitive-load-team-topologies/) | Matthew Skelton, Manuel Pais |      |
+| 名称 | 作者 / 组织 | 简介 |
+| ---- | ----------- | ---- |
+| [What is a Thinnest Viable Platform (TVP)?](https://teamtopologies.com/key-concepts-content/what-is-a-thinnest-viable-platform-tvp) | Team Topologies | TVP 的官方定义 |
+| [Monoliths vs Microservices is Missing the Point—Start with Team Cognitive Load](https://itrevolution.com/articles/team-cognitive-load-team-topologies/) | Matthew Skelton, Manuel Pais | TVP 与认知负荷 |
+| [The Thinnest Viable Platform](https://martinfowler.com/articles/talk-about-platforms.html#TheThinnestViablePlatform) | Evan Bottcher | 如何构建 TVP |

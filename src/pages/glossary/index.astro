@@ -1,54 +1,129 @@
 ---
 import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import Layout from '../../layouts/main.astro';
+import FullwidthLayout from '@/layouts/fullwidth.astro';
+import KnowledgeMapComponent from '@/components/KnowledgeMap';
+import { convertGlossaryToGraph } from '@/lib/glossary-to-graph';
+import { calculateHierarchicalLayout } from '@/lib/knowledge-map-layout';
 
-const allGlossary = await getCollection('glossary');
+// 获取所有术语表条目
+const glossaryEntries = await getCollection('glossary');
 
-// 过滤掉 index.mdx 和 README.mdx
-const glossaryEntries = allGlossary.filter(
-  (entry: CollectionEntry<'glossary'>) => !entry.id.includes('index') && !entry.id.includes('README') && !entry.data.draft
-);
+// 转换为图数据
+const { nodes: rawNodes, edges } = convertGlossaryToGraph(glossaryEntries);
 
-// 按标题排序
-const sortedEntries = glossaryEntries.sort((a: CollectionEntry<'glossary'>, b: CollectionEntry<'glossary'>) => {
-  return (a.data.title || '').localeCompare(b.data.title || '', 'zh-CN');
-});
+// 应用分类分层布局（不显示连接线）
+const { nodes, edges: layoutedEdges } = calculateHierarchicalLayout(rawNodes, edges);
 
-// 按首字母分组
-const groupedEntries = sortedEntries.reduce((acc: Record<string, CollectionEntry<'glossary'>[]>, entry: CollectionEntry<'glossary'>) => {
-  const firstChar = entry.data.title?.charAt(0).toUpperCase() || '#';
-  if (!acc[firstChar]) {
-    acc[firstChar] = [];
-  }
-  acc[firstChar].push(entry);
-  return acc;
-}, {} as Record<string, typeof sortedEntries>);
+// 将所有节点和原始边数据传递给组件，用于查找关联
+const allNodesData = rawNodes;
+const allEdgesData = edges;
 ---
 
-<Layout title="术语表">
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <h1 class="text-4xl font-bold mb-8">术语表</h1>
-    
-    <div class="space-y-8">
-      {Object.entries(groupedEntries).map(([letter, entries]) => (
-        <section>
-          <h2 class="text-2xl font-bold mb-4 text-blue-600">{letter}</h2>
-          <div class="grid gap-4 md:grid-cols-2">
-            {(entries as CollectionEntry<'glossary'>[]).map((entry: CollectionEntry<'glossary'>) => (
-              <a 
-                href={`/glossary/${entry.id.replace(/\.(md|mdx)$/, '')}`}
-                class="block p-4 border rounded-lg hover:shadow-md transition-shadow"
-              >
-                <h3 class="text-lg font-semibold mb-2">{entry.data.title}</h3>
-                {entry.data.description && (
-                  <p class="text-sm text-gray-600">{entry.data.description}</p>
-                )}
-              </a>
-            ))}
+<FullwidthLayout title="知识地图 - 平台工程社区" description="平台工程术语知识地图，展示术语之间的关系">
+  <!-- 全屏容器 -->
+  <div class="relative w-full h-screen flex">
+    <!-- 知识地图主区域 -->
+    <div class="flex-1 bg-white dark:bg-gray-900" id="knowledge-map-container">
+      <KnowledgeMapComponent 
+        client:load
+        initialNodes={nodes}
+        initialEdges={layoutedEdges}
+        allNodes={allNodesData}
+      />
+    </div>
+
+    <!-- 右侧工具栏 -->
+    <div class="w-80 bg-gray-50 dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 overflow-y-auto">
+      <div class="p-6 space-y-6">
+        <!-- 标题 -->
+        <div>
+          <h1 class="text-2xl font-bold mb-2">知识地图</h1>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            探索平台工程术语及其关联关系
+          </p>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="text-sm font-semibold mb-2">数据统计</div>
+          <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+            <div class="flex justify-between">
+              <span>术语数量</span>
+              <span class="font-medium text-gray-900 dark:text-gray-100">{nodes.length}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>关联关系</span>
+              <span class="font-medium text-gray-900 dark:text-gray-100">{allEdgesData.length}</span>
+            </div>
           </div>
-        </section>
-      ))}
+        </div>
+
+        <!-- 图例 -->
+        <div class="p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div class="text-sm font-semibold mb-3">术语分类</div>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-sm">
+              <div class="w-4 h-4 rounded" style="background-color: rgb(238, 242, 255); border: 2px solid rgb(165, 180, 252);"></div>
+              <span>核心概念</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <div class="w-4 h-4 rounded" style="background-color: rgb(239, 246, 255); border: 2px solid rgb(147, 197, 253);"></div>
+              <span>平台产品</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <div class="w-4 h-4 rounded" style="background-color: rgb(236, 253, 245); border: 2px solid rgb(110, 231, 183);"></div>
+              <span>团队角色</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <div class="w-4 h-4 rounded" style="background-color: rgb(250, 245, 255); border: 2px solid rgb(216, 180, 254);"></div>
+              <span>方法论</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <div class="w-4 h-4 rounded" style="background-color: rgb(253, 242, 248); border: 2px solid rgb(249, 168, 212);"></div>
+              <span>用户体验</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <div class="w-4 h-4 rounded" style="background-color: rgb(255, 247, 237); border: 2px solid rgb(253, 186, 116);"></div>
+              <span>技术实践</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+          <div class="text-sm font-semibold mb-3 text-blue-900 dark:text-blue-100">使用提示</div>
+          <ul class="text-sm text-blue-800 dark:text-blue-200 space-y-2">
+            <li>• 点击术语卡片查看关联术语</li>
+            <li>• 关联视图中点击卡片查看详情</li>
+            <li>• 使用鼠标滚轮可缩放视图</li>
+            <li>• 拖动空白区域可平移视图</li>
+            <li>• 点击左上角按钮返回全局视图</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
-</Layout>
+</FullwidthLayout>
+
+<style>
+  /* React Flow 样式覆盖 */
+  :global(.react-flow__node) {
+    cursor: pointer;
+  }
+  
+  :global(.react-flow__node:hover) {
+    z-index: 1000 !important;
+  }
+
+  :global(.react-flow__controls) {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  }
+
+  :global(.react-flow__minimap) {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  }
+
+  :global(.react-flow__edge) {
+    display: none !important; /* 隐藏所有连接线 */
+  }
+</style>
