@@ -3,6 +3,7 @@ id: what-is-backstage
 title: Backstage 简介
 # prettier-ignore 
 description: Backstage 是一个用于构建开发者门户网站的开源框架。Backstage 由集中式软件目录提供支持，可恢复微服务和基础架构的秩序。
+draft: true
 ---
 
 ![software-catalog](../assets/header.png)

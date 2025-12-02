@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import MainLayout from '../../layouts/main.astro';
+import { ArticleSidebar } from '../../components/ArticleSidebar';
+import { TableOfContents } from '../../components/TableOfContents';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const events = await getCollection('events');
@@ -21,6 +23,23 @@ interface Props {
 
 const { event } = Astro.props;
 const { Content, headings } = await render(event);
+
+// 获取所有活动用于侧边栏
+const allEvents = await getCollection('events');
+const sidebarEvents = allEvents
+  .filter((e: CollectionEntry<'events'>) => !e.id.includes('README') && !e.data.draft)
+  .sort((a: CollectionEntry<'events'>, b: CollectionEntry<'events'>) => {
+    const dateA = a.data.eventDate?.getTime() || 0;
+    const dateB = b.data.eventDate?.getTime() || 0;
+    return dateB - dateA;
+  })
+  .slice(0, 20)
+  .map((e: CollectionEntry<'events'>) => ({
+    title: e.data.title,
+    href: `/events/${e.id.replace(/\.(md|mdx)$/, '')}`,
+  }));
+
+const currentPath = `/events/${event.id.replace(/\.(md|mdx)$/, '')}`;
 
 const formattedDate = event.data.eventDate?.toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -44,83 +63,87 @@ const canonicalUrl = `${siteUrl}/events/${event.id}`;
     <meta name="twitter:description" content={event.data.description || event.data.title} />
   </Fragment>
 
-  <article class="container mx-auto px-4 py-8 max-w-4xl">
-    <header class="mb-8">
-      <div class="flex items-start justify-between mb-4">
-        <h1 class="text-4xl font-bold flex-1">{event.data.title}</h1>
-        {event.data.type && (
-          <span class="ml-4 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
-            {event.data.type}
-          </span>
-        )}
-      </div>
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex gap-8">
+      <!-- 左侧边栏导航 -->
+      <aside class="hidden lg:block w-64 shrink-0">
+        <div class="sticky top-24">
+          <ArticleSidebar
+            client:load
+            sectionTitle="活动"
+            sectionHref="/events"
+            navItems={sidebarEvents}
+            currentPath={currentPath}
+          />
+        </div>
+      </aside>
       
-      <div class="space-y-2 text-gray-600">
-        {formattedDate && (
-          <div class="flex items-center gap-2">
-            <span>📅</span>
-            <time>{formattedDate}</time>
-            {event.data.endDate && (
-              <span> - {event.data.endDate.toLocaleDateString('zh-CN')}</span>
+      <!-- 主内容区 -->
+      <article class="flex-1 min-w-0 max-w-3xl">
+        <header class="mb-8">
+          <div class="flex items-start justify-between mb-4">
+            <h1 class="text-4xl font-bold flex-1 text-foreground">{event.data.title}</h1>
+            {event.data.type && (
+              <span class="ml-4 px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">
+                {event.data.type}
+              </span>
             )}
           </div>
-        )}
-        
-        {event.data.location && (
-          <div class="flex items-center gap-2">
-            <span>📍</span>
-            <span>{event.data.location}</span>
-            {event.data.isOnline && <span class="text-blue-600">(在线活动)</span>}
-          </div>
-        )}
-        
-        {event.data.organizers && event.data.organizers.length > 0 && (
-          <div class="flex items-center gap-2">
-            <span>👥</span>
-            <span>主办方: {event.data.organizers.join('、')}</span>
-          </div>
-        )}
-        
-        {event.data.registrationUrl && (
-          <div class="mt-4">
-            <a 
-              href={event.data.registrationUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-              立即报名 →
-            </a>
-          </div>
-        )}
-      </div>
-    </header>
-
-    {headings.length > 0 && (
-      <aside class="mb-8 p-4 bg-gray-50 rounded-lg">
-        <h2 class="text-xl font-semibold mb-2">目录</h2>
-        <nav>
-          <ul class="space-y-1">
-            {headings.map((heading: any) => (
-              <li style={`margin-left: ${(heading.depth - 1) * 1}rem`}>
-                <a href={`#${heading.slug}`} class="text-blue-600 hover:underline">
-                  {heading.text}
+          
+          <div class="space-y-2 text-muted-foreground">
+            {formattedDate && (
+              <div class="flex items-center gap-2">
+                <span>📅</span>
+                <time>{formattedDate}</time>
+                {event.data.endDate && (
+                  <span> - {event.data.endDate.toLocaleDateString('zh-CN')}</span>
+                )}
+              </div>
+            )}
+            
+            {event.data.location && (
+              <div class="flex items-center gap-2">
+                <span>📍</span>
+                <span>{event.data.location}</span>
+                {event.data.isOnline && <span class="text-primary">(在线活动)</span>}
+              </div>
+            )}
+            
+            {event.data.organizers && event.data.organizers.length > 0 && (
+              <div class="flex items-center gap-2">
+                <span>👥</span>
+                <span>主办方: {event.data.organizers.join('、')}</span>
+              </div>
+            )}
+            
+            {event.data.registrationUrl && (
+              <div class="mt-4">
+                <a 
+                  href={event.data.registrationUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition"
+                >
+                  立即报名 →
                 </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
-    )}
+              </div>
+            )}
+          </div>
+        </header>
 
-    <div class="typography-content max-w-none">
-      <Content />
+        <div class="typography-content max-w-none">
+          <Content />
+        </div>
+      </article>
+      
+      <!-- 右侧 TOC -->
+      {headings.length > 0 && (
+        <aside class="hidden xl:block w-56 shrink-0">
+          <div class="sticky top-24">
+            <TableOfContents client:load headings={headings} />
+          </div>
+        </aside>
+      )}
     </div>
-
-    <footer class="mt-12 pt-8 border-t">
-      <a href="/events" class="text-blue-600 hover:underline">
-        ← 返回活动列表
-      </a>
-    </footer>
-  </article>
+  </div>
 </MainLayout>

@@ -1,67 +1,415 @@
 ---
 import MainLayout from '../layouts/main.astro';
+import { getCollection } from 'astro:content';
 
-const heroButtons = [
-	{ title: '加入社区', link: 'https://www.wenjuan.com/s/UZBZJvwQyMS/', type: 'primary' },
-	{ title: '查看知识地图', link: '/glossary', type: 'secondary' },
+// ============================================
+// 首页配置 - 集中管理所有可配置信息
+// ============================================
+const homeConfig = {
+  // Hero 区域配置
+  hero: {
+    title: '平台工程社区',
+    subtitle: 'Platform Engineering Community China',
+    description: '中立的、非商业目的、以开放协作为中心的中文技术社区',
+    stats: [
+      { label: '术语定义', value: '20+' },
+      { label: '月刊期数', value: '12' },
+      { label: '原创文章', value: '6' },
+    ],
+    buttons: [
+      { title: '探索平台之道', link: 'https://platformers.cn', type: 'primary' },
+      { title: '加入社区', link: 'https://www.wenjuan.com/s/UZBZJvwQyMS/', type: 'secondary' },
+    ],
+  },
+
+  // 核心板块配置
+  sections: [
+    {
+      id: 'monthly',
+      title: '月刊',
+      subtitle: 'Monthly News',
+      description: '每月精选平台工程领域动态、工具更新与行业趋势',
+      icon: '📰',
+      link: '/monthly',
+      color: 'from-blue-500 to-cyan-500',
+    },
+    {
+      id: 'articles',
+      title: '原创',
+      subtitle: 'Original Articles',
+      description: '社区成员原创的深度文章、实践经验与技术分享',
+      icon: '✍️',
+      link: '/articles',
+      color: 'from-purple-500 to-pink-500',
+    },
+    {
+      id: 'translations',
+      title: '翻译',
+      subtitle: 'Translations',
+      description: '精选国际优质内容的中文翻译，拓展技术视野',
+      icon: '🌐',
+      link: '/translations',
+      color: 'from-green-500 to-emerald-500',
+    },
+    {
+      id: 'glossary',
+      title: '知识地图',
+      subtitle: 'Knowledge Map',
+      description: '平台工程核心概念与术语的可视化知识图谱',
+      icon: '🗺️',
+      link: '/glossary',
+      color: 'from-orange-500 to-yellow-500',
+    },
+    {
+      id: 'events',
+      title: '活动',
+      subtitle: 'Events',
+      description: '线上线下技术沙龙、会议与社区聚会信息',
+      icon: '🎪',
+      link: '/events',
+      color: 'from-red-500 to-rose-500',
+    },
+    {
+      id: 'pemm',
+      title: 'PEMM',
+      subtitle: 'Maturity Model',
+      description: '平台工程成熟度模型，评估与提升平台能力',
+      icon: '📊',
+      link: '/pemm',
+      color: 'from-indigo-500 to-violet-500',
+    },
+  ],
+
+  // 热门术语配置
+  hotTerms: [
+    { title: '平台工程', slug: 'platform-engineering' },
+    { title: '内部开发者平台', slug: 'internal-developer-platform' },
+    { title: '开发者体验', slug: 'developer-experience' },
+    { title: '黄金路径', slug: 'golden-path' },
+    { title: '团队拓扑', slug: 'team-topologies' },
+    { title: '认知负荷', slug: 'cognitive-load' },
+    { title: '平台即产品', slug: 'platform-as-a-product' },
+    { title: '最薄可行平台', slug: 'thinnest-viable-platform' },
+  ],
+
+  // 页脚配置
+  footer: {
+    links: [
+      { title: 'GitHub', url: 'https://github.com/PECommunity' },
+      { title: '贡献指南', url: 'https://github.com/PECommunity/community/blob/main/CODE_OF_CONDUCT.md' },
+    ],
+    copyright: '© 2024 平台工程社区 PECommunity',
+  },
+};
+
+// ============================================
+// 动态获取最新文章
+// ============================================
+type ArticleEntry = {
+  slug: string;
+  data: {
+    title: string;
+    pubDate?: Date;
+    description?: string;
+  };
+  collection: string;
+};
+
+// 获取所有内容集合
+const monthlyEntries = await getCollection('monthly');
+const articlesEntries = await getCollection('articles');
+const translationsEntries = await getCollection('translations');
+
+// 过滤并格式化文章
+const formatArticles = (entries: any[], type: string, basePath: string): ArticleEntry[] => {
+  return entries
+    .filter((entry: any) => !entry.id.includes('README') && !entry.id.includes('index'))
+    .map((entry: any) => ({
+      slug: `${basePath}/${entry.id.replace(/\.(md|mdx)$/, '')}`,
+      data: {
+        title: entry.data.title || entry.id,
+        pubDate: entry.data.pubDate,
+        description: entry.data.description,
+      },
+      collection: type,
+    }));
+};
+
+const allArticles: ArticleEntry[] = [
+  ...formatArticles(monthlyEntries, '月刊', '/monthly'),
+  ...formatArticles(articlesEntries, '原创', '/articles'),
+  ...formatArticles(translationsEntries, '翻译', '/translations'),
 ];
+
+// 按日期排序，取最新 4 篇
+const latestArticles = allArticles
+  .filter((a) => a.data.pubDate)
+  .sort((a, b) => {
+    const dateA = a.data.pubDate ? new Date(a.data.pubDate).getTime() : 0;
+    const dateB = b.data.pubDate ? new Date(b.data.pubDate).getTime() : 0;
+    return dateB - dateA;
+  })
+  .slice(0, 5);
+
+// 类型标签颜色映射
+const typeColors: Record<string, string> = {
+  '月刊': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+  '原创': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+  '翻译': 'bg-green-500/20 text-green-300 border-green-500/30',
+};
+
+// 格式化日期
+const formatDate = (date: Date | undefined) => {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 ---
 
-<MainLayout>
-	<main>
-		<!-- Hero Section -->
-		<section class="min-h-[60vh] flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
-			<div class="container mx-auto px-4">
-				<div class="flex flex-col lg:flex-row-reverse items-center gap-8">
-					<div class="max-w-sm">
-						<img src="/hero.png" alt="平台工程社区" class="rounded-lg shadow-2xl" />
-					</div>
-					<div class="flex-1 text-center lg:text-left">
-						<h1 class="text-5xl font-bold mb-6">平台工程社区</h1>
-						<p class="text-xl mb-8 text-gray-600">中立的，非商业目的，以开放协作为中心的中文技术社区</p>
-						<div class="flex gap-4 justify-center lg:justify-start">
-							{heroButtons.map((btn) => (
-								<a
-									href={btn.link}
-									class={`px-6 py-3 rounded-lg font-medium transition-colors ${
-										btn.type === 'primary'
-											? 'bg-blue-600 text-white hover:bg-blue-700'
-											: 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-									}`}
-								>
-									{btn.title}
-								</a>
-							))}
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+<MainLayout title="平台工程社区 - Platform Engineering Community China" description={homeConfig.hero.description}>
+  <main class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+    
+    <!-- ============================================ -->
+    <!-- Hero 区域 -->
+    <!-- ============================================ -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <!-- 背景网格 -->
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+      
+      <!-- 光晕效果 -->
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[128px] animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[128px] animate-pulse" style="animation-delay: 1s;"></div>
+      
+      <div class="relative z-10 container mx-auto px-4 text-center">
+        <!-- 标题 -->
+        <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+          {homeConfig.hero.title}
+        </h1>
+        <p class="text-lg md:text-xl text-blue-300/80 font-mono mb-6">
+          {homeConfig.hero.subtitle}
+        </p>
+        <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10">
+          {homeConfig.hero.description}
+        </p>
 
-		<!-- Features Section -->
-		<section class="py-16 bg-white">
-			<div class="container mx-auto px-4">
-				<div class="grid md:grid-cols-3 gap-8">
-					<div class="text-center">
-						<div class="text-4xl mb-4">📚</div>
-						<h3 class="text-xl font-bold mb-2">丰富的内容</h3>
-						<p class="text-gray-600">每月洞察、原创文章、翻译内容</p>
-						<a href="/monthly" class="text-blue-600 hover:underline mt-2 inline-block">浏览文章 →</a>
-					</div>
-					<div class="text-center">
-						<div class="text-4xl mb-4">🎯</div>
-						<h3 class="text-xl font-bold mb-2">知识地图</h3>
-						<p class="text-gray-600">平台工程术语及关联关系</p>
-						<a href="/glossary" class="text-blue-600 hover:underline mt-2 inline-block">查看地图 →</a>
-					</div>
-					<div class="text-center">
-						<div class="text-4xl mb-4">🎪</div>
-						<h3 class="text-xl font-bold mb-2">行业活动</h3>
-						<p class="text-gray-600">会议、沙龙、线上线下活动</p>
-						<a href="/events" class="text-blue-600 hover:underline mt-2 inline-block">查看活动 →</a>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
+        <!-- 统计数据 -->
+        <div class="flex justify-center gap-8 md:gap-16 mb-12">
+          {homeConfig.hero.stats.map((stat) => (
+            <div class="text-center">
+              <div class="text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
+              <div class="text-sm text-slate-500">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA 按钮 -->
+        <div class="flex flex-wrap gap-4 justify-center">
+          {homeConfig.hero.buttons.map((btn) => (
+            <a
+              href={btn.link}
+              target={btn.link.startsWith('http') ? '_blank' : undefined}
+              rel={btn.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+              class={`px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
+                btn.type === 'primary'
+                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105'
+                  : 'bg-slate-800/50 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 text-slate-300'
+              }`}
+            >
+              {btn.title}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 核心板块 -->
+    <!-- ============================================ -->
+    <section class="py-24 relative">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">探索社区内容</h2>
+          <p class="text-slate-400 max-w-2xl mx-auto">
+            从月度洞察到深度原创，从国际视野到本土实践，全方位了解平台工程
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {homeConfig.sections.map((section) => (
+            <a
+              href={section.link}
+              class="group relative p-6 rounded-2xl bg-slate-800/30 border border-slate-700/50 hover:border-slate-600 transition-all duration-300 hover:scale-[1.02] hover:bg-slate-800/50"
+            >
+              <!-- 渐变光效 -->
+              <div class={`absolute inset-0 rounded-2xl bg-gradient-to-br ${section.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+              
+              <div class="relative z-10">
+                <div class="text-4xl mb-4">{section.icon}</div>
+                <h3 class="text-xl font-bold mb-1 text-white group-hover:text-blue-300 transition-colors">
+                  {section.title}
+                </h3>
+                <p class="text-sm text-slate-500 font-mono mb-3">{section.subtitle}</p>
+                <p class="text-slate-400 text-sm leading-relaxed">{section.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 最新文章 -->
+    <!-- ============================================ -->
+    <section class="py-24 bg-slate-900/50 relative">
+      <!-- 装饰线 -->
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+      
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-12">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-2">最新内容</h2>
+            <p class="text-slate-400">来自月刊、原创和翻译的最新发布</p>
+          </div>
+          <a href="/monthly" class="hidden md:flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+            查看全部
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          {latestArticles.map((article, index) => (
+            <a
+              href={article.slug}
+              class={`group relative p-6 rounded-2xl border border-slate-700/50 hover:border-slate-600 transition-all duration-300 ${
+                index === 0 ? 'md:col-span-2 bg-gradient-to-br from-slate-800/50 to-slate-900/50' : 'bg-slate-800/30'
+              }`}
+            >
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <!-- 类型标签 -->
+                  <span class={`inline-block px-3 py-1 rounded-full text-xs font-medium border mb-3 ${typeColors[article.collection]}`}>
+                    {article.collection}
+                  </span>
+                  
+                  <h3 class={`font-bold text-white group-hover:text-blue-300 transition-colors mb-2 ${index === 0 ? 'text-2xl' : 'text-lg'}`}>
+                    {article.data.title}
+                  </h3>
+                  
+                  {article.data.description && index === 0 && (
+                    <p class="text-slate-400 text-sm line-clamp-2 mb-3">{article.data.description}</p>
+                  )}
+                  
+                  <div class="text-sm text-slate-500">
+                    {formatDate(article.data.pubDate)}
+                  </div>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="text-slate-600 group-hover:text-blue-400 group-hover:translate-x-1 transition-all mt-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 知识地图预览 -->
+    <!-- ============================================ -->
+    <section class="py-24 relative overflow-hidden">
+      <!-- 背景装饰 -->
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1),transparent_70%)]"></div>
+      
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">知识地图</h2>
+          <p class="text-slate-400 max-w-2xl mx-auto">
+            探索平台工程核心概念，建立系统化的知识体系
+          </p>
+        </div>
+
+        <!-- 术语标签云 -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
+          {homeConfig.hotTerms.map((term, index) => (
+            <a
+              href={`/glossary/${term.slug}`}
+              class="px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50 text-slate-300 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300"
+              style={`animation-delay: ${index * 0.05}s`}
+            >
+              {term.title}
+            </a>
+          ))}
+        </div>
+
+        <div class="text-center">
+          <a
+            href="/glossary"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border border-blue-500/30 text-blue-300 hover:text-white hover:border-blue-500/50 hover:from-blue-600/30 hover:to-cyan-600/30 transition-all duration-300"
+          >
+            探索完整知识地图
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- 页脚 -->
+    <!-- ============================================ -->
+    <footer class="py-12 border-t border-slate-800">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="text-slate-500 text-sm">
+            {homeConfig.footer.copyright}
+          </div>
+          <div class="flex items-center gap-6">
+            {homeConfig.footer.links.map((link) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-slate-400 hover:text-white transition-colors text-sm"
+              >
+                {link.title}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
 </MainLayout>
+
+<style>
+  /* 动画效果 */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  section {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  /* 标签云动画 */
+  .flex-wrap a {
+    animation: fadeInUp 0.4s ease-out both;
+  }
+</style>

@@ -2,6 +2,7 @@
 id: architecture-overview
 title: Architecture overview
 description: Documentation on Architecture overview
+draft: true
 ---
 
 ## Terminology

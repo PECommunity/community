@@ -4,6 +4,8 @@ import Layout from '../../layouts/main.astro';
 import { Typography } from '../../components/Typography';
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
+import ArticleSidebar from '../../components/ArticleSidebar';
+import TableOfContents from '../../components/TableOfContents';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const monthlyArticles = await getCollection('monthly');
@@ -21,7 +23,23 @@ interface Props {
 }
 
 const { article } = Astro.props;
-const { Content } = await render(article);
+const { Content, headings } = await render(article);
+
+// 获取所有月刊用于侧边栏导航
+const allMonthly = await getCollection('monthly');
+const sidebarArticles = allMonthly
+  .filter((a: CollectionEntry<'monthly'>) => !a.id.includes('README') && !a.data.draft)
+  .sort((a: CollectionEntry<'monthly'>, b: CollectionEntry<'monthly'>) => {
+    const dateA = a.data.pubDate?.valueOf() || 0;
+    const dateB = b.data.pubDate?.valueOf() || 0;
+    return dateB - dateA;
+  })
+  .map((a: CollectionEntry<'monthly'>) => ({
+    title: a.data.title,
+    href: `/monthly/${a.id.replace(/\.(md|mdx)$/, '')}`
+  }));
+
+const currentPath = `/monthly/${article.id.replace(/\.(md|mdx)$/, '')}`;
 
 const formattedDate = article.data.pubDate?.toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -31,36 +49,71 @@ const formattedDate = article.data.pubDate?.toLocaleDateString('zh-CN', {
 ---
 
 <Layout title={article.data.title}>
-  <article class="container mx-auto px-4 py-8 max-w-4xl">
-    <header class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">{article.data.title}</h1>
-      {article.data.description && (
-        <p class="text-xl text-gray-600 mb-4">{article.data.description}</p>
-      )}
-      <div class="flex flex-col gap-2 text-sm text-gray-500 mb-4">
-        {article.data.pubDate && (
-          <time datetime={article.data.pubDate.toISOString()}>
-            {formattedDate}
-          </time>
-        )}
-        {article.data.editors && article.data.editors.length > 0 && (
-          <span>编辑：{article.data.editors.join('、')}</span>
-        )}
-        {article.data.reviewers && article.data.reviewers.length > 0 && (
-          <span>审校：{article.data.reviewers.join('、')}</span>
-        )}
-      </div>
-      {article.data.tags && article.data.tags.length > 0 && (
-        <div class="flex gap-2">
-          {article.data.tags.map((tag: string) => (
-            <span class="text-xs bg-gray-100 px-2 py-1 rounded">{tag}</span>
-          ))}
+  <!-- 三栏布局 -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex gap-8">
+      <!-- 左侧边栏 - 文章导航 -->
+      <aside class="hidden lg:block w-64 shrink-0">
+        <div class="sticky top-24">
+          <ArticleSidebar
+            client:load
+            currentPath={currentPath}
+            sectionTitle="每月洞察"
+            sectionHref="/monthly"
+            navItems={sidebarArticles}
+          />
         </div>
+      </aside>
+
+      <!-- 主内容区 -->
+      <article class="flex-1 min-w-0 max-w-3xl">
+        <header class="mb-8">
+          <h1 class="text-4xl font-bold mb-4 text-foreground">{article.data.title}</h1>
+          {article.data.description && (
+            <p class="text-xl text-muted-foreground mb-4">{article.data.description}</p>
+          )}
+          <div class="flex flex-col gap-2 text-sm text-muted-foreground mb-4">
+            {article.data.pubDate && (
+              <time datetime={article.data.pubDate.toISOString()}>
+                {formattedDate}
+              </time>
+            )}
+            {article.data.editors && article.data.editors.length > 0 && (
+              <span>编辑：{article.data.editors.join('、')}</span>
+            )}
+            {article.data.reviewers && article.data.reviewers.length > 0 && (
+              <span>审校：{article.data.reviewers.join('、')}</span>
+            )}
+          </div>
+          {article.data.tags && article.data.tags.length > 0 && (
+            <div class="flex gap-2">
+              {article.data.tags.map((tag: string) => (
+                <span class="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded">{tag}</span>
+              ))}
+            </div>
+          )}
+        </header>
+        
+        <div class="typography-content">
+          <Content />
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-8 border-t border-border">
+          <a href="/monthly" class="text-primary hover:underline">
+            ← 返回月刊列表
+          </a>
+        </footer>
+      </article>
+
+      <!-- 右侧边栏 - 目录 -->
+      {headings.length > 0 && (
+        <aside class="hidden xl:block w-56 shrink-0">
+          <div class="sticky top-24">
+            <TableOfContents client:load headings={headings} />
+          </div>
+        </aside>
       )}
-    </header>
-    
-    <Typography>
-      <Content />
-    </Typography>
-  </article>
+    </div>
+  </div>
 </Layout>

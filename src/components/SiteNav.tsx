@@ -21,12 +21,12 @@ export function SiteNav() {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800/50 bg-slate-950/90 backdrop-blur-xl supports-[backdrop-filter]:bg-slate-950/80">
       <div className="container flex h-16 items-center px-4">
         {/* Logo */}
-        <a href="/" className="mr-4 flex items-center space-x-2">
+        <a href="/" className="mr-4 flex items-center space-x-2 group">
           <img src="/favicon.png" alt="PECommunity" className="h-8 w-8" />
-          <span className="font-bold text-xl">
+          <span className="font-bold text-xl text-white group-hover:text-blue-400 transition-colors">
             PECommunity
           </span>
         </a>
@@ -76,7 +76,7 @@ export function SiteNav() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="md:hidden">
               <button 
-                className="inline-flex items-center justify-center rounded-md p-2 hover:bg-accent hover:text-accent-foreground"
+                className="inline-flex items-center justify-center rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
                 aria-label="打开菜单"
               >
                 <svg
@@ -94,23 +94,23 @@ export function SiteNav() {
                 </svg>
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-slate-950 border-slate-800">
               <SheetHeader className="text-left">
-                <SheetTitle>导航菜单</SheetTitle>
+                <SheetTitle className="text-white">导航菜单</SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-2 mt-8 px-1">
                 {navConfig.mainNav.map((item) => (
                   <div key={item.title}>
                     {item.items ? (
                       <div>
-                        <div className="font-semibold text-base mb-2 px-3 py-2">{item.title}</div>
+                        <div className="font-semibold text-base mb-2 px-3 py-2 text-slate-300">{item.title}</div>
                         <div className="flex flex-col gap-1 pl-4">
                           {item.items.map((subItem) => (
                             <a
                               key={subItem.title}
                               href={subItem.href}
                               onClick={() => setOpen(false)}
-                              className="text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md px-3 py-2 transition-all duration-200"
+                              className="text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-md px-3 py-2 transition-all duration-200"
                             >
                               {subItem.title}
                             </a>
@@ -121,7 +121,7 @@ export function SiteNav() {
                       <a
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="block text-base font-medium hover:text-primary hover:bg-accent rounded-md px-3 py-2 transition-all duration-200"
+                        className="block text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md px-3 py-2 transition-all duration-200"
                       >
                         {item.title}
                       </a>

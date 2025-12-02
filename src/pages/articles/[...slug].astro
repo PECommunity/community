@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import MainLayout from '../../layouts/main.astro';
+import ArticleSidebar from '../../components/ArticleSidebar';
+import TableOfContents from '../../components/TableOfContents';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const articles = await getCollection('articles');
@@ -21,6 +23,23 @@ interface Props {
 
 const { article } = Astro.props;
 const { Content, headings } = await render(article);
+
+// 获取所有文章用于侧边栏导航
+const allArticles = await getCollection('articles');
+const sidebarArticles = allArticles
+  .filter((a: CollectionEntry<'articles'>) => !a.id.includes('README') && !a.data.draft)
+  .sort((a: CollectionEntry<'articles'>, b: CollectionEntry<'articles'>) => {
+    const dateA = a.data.pubDate?.valueOf() || 0;
+    const dateB = b.data.pubDate?.valueOf() || 0;
+    return dateB - dateA;
+  })
+  .slice(0, 20) // 只显示最近20篇
+  .map((a: CollectionEntry<'articles'>) => ({
+    title: a.data.title,
+    href: `/articles/${a.id.replace(/\.(md|mdx)$/, '')}`
+  }));
+
+const currentPath = `/articles/${article.id.replace(/\.(md|mdx)$/, '')}`;
 
 const formattedDate = article.data.pubDate?.toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -56,101 +75,108 @@ const canonicalUrl = `${siteUrl}/articles/${article.id}`;
     <meta name="twitter:description" content={article.data.description || article.data.title} />
   </Fragment>
 
-  <article class="container mx-auto px-4 py-8 max-w-4xl">
-    <!-- Article Header -->
-    <header class="mb-8">
-      <h1 class="text-4xl font-bold mb-4">{article.data.title}</h1>
-      
-      <div class="flex flex-col gap-2 text-gray-600 mb-4">
-        <div class="flex items-center gap-4 flex-wrap">
-          {article.data.authors && article.data.authors.length > 0 ? (
-            <span>作者: {article.data.authors.join('、')}</span>
-          ) : (
-            <span>作者: PECommunity</span>
-          )}
-          {formattedDate && (
-            <>
-              <span>•</span>
-              <time>{formattedDate}</time>
-            </>
-          )}
-          {article.data.updatedDate && (
-            <>
-              <span>•</span>
-              <time>更新于: {article.data.updatedDate.toLocaleDateString('zh-CN')}</time>
-            </>
-          )}
+  <!-- 三栏布局 -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex gap-8">
+      <!-- 左侧边栏 - 文章导航 -->
+      <aside class="hidden lg:block w-64 shrink-0">
+        <div class="sticky top-24">
+          <ArticleSidebar
+            client:load
+            currentPath={currentPath}
+            sectionTitle="原创文章"
+            sectionHref="/articles"
+            navItems={sidebarArticles}
+          />
         </div>
-        {article.data.editors && article.data.editors.length > 0 && (
-          <div class="text-sm">
-            <span>编辑: {article.data.editors.join('、')}</span>
-          </div>
-        )}
-        {article.data.reviewers && article.data.reviewers.length > 0 && (
-          <div class="text-sm">
-            <span>审校: {article.data.reviewers.join('、')}</span>
-          </div>
-        )}
-      </div>
-      
-      {article.data.tags && article.data.tags.length > 0 && (
-        <div class="flex gap-2 flex-wrap">
-          {article.data.tags.map((tag: string) => (
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-      
-      {article.data.originalUrl && (
-        <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400">
-          <p class="text-sm">
-            本文翻译自: 
-            <a href={article.data.originalUrl} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-              {article.data.originalUrl}
-            </a>
-          </p>
-          {article.data.originalAuthor && (
-            <p class="text-sm mt-1">原作者: {article.data.originalAuthor}</p>
-          )}
-        </div>
-      )}
-    </header>
-
-    <!-- Table of Contents -->
-    {headings.length > 0 && (
-      <aside class="mb-8 p-4 bg-gray-50 rounded-lg">
-        <h2 class="text-xl font-semibold mb-2">目录</h2>
-        <nav>
-          <ul class="space-y-1">
-            {headings.map((heading: any) => (
-              <li style={`margin-left: ${(heading.depth - 1) * 1}rem`}>
-                <a 
-                  href={`#${heading.slug}`}
-                  class="text-blue-600 hover:underline"
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </aside>
-    )}
 
-    <!-- Article Content -->
-    <div class="typography-content max-w-none">
-      <Content />
+      <!-- 主内容区 -->
+      <article class="flex-1 min-w-0 max-w-3xl">
+        <!-- Article Header -->
+        <header class="mb-8">
+          <h1 class="text-4xl font-bold mb-4 text-foreground">{article.data.title}</h1>
+          
+          <div class="flex flex-col gap-2 text-muted-foreground mb-4">
+            <div class="flex items-center gap-4 flex-wrap">
+              {article.data.authors && article.data.authors.length > 0 ? (
+                <span>作者: {article.data.authors.join('、')}</span>
+              ) : (
+                <span>作者: PECommunity</span>
+              )}
+              {formattedDate && (
+                <>
+                  <span>•</span>
+                  <time>{formattedDate}</time>
+                </>
+              )}
+              {article.data.updatedDate && (
+                <>
+                  <span>•</span>
+                  <time>更新于: {article.data.updatedDate.toLocaleDateString('zh-CN')}</time>
+                </>
+              )}
+            </div>
+            {article.data.editors && article.data.editors.length > 0 && (
+              <div class="text-sm">
+                <span>编辑: {article.data.editors.join('、')}</span>
+              </div>
+            )}
+            {article.data.reviewers && article.data.reviewers.length > 0 && (
+              <div class="text-sm">
+                <span>审校: {article.data.reviewers.join('、')}</span>
+              </div>
+            )}
+          </div>
+          
+          {article.data.tags && article.data.tags.length > 0 && (
+            <div class="flex gap-2 flex-wrap">
+              {article.data.tags.map((tag: string) => (
+                <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+          
+          {article.data.originalUrl && (
+            <div class="mt-4 p-4 bg-yellow-500/10 border-l-4 border-yellow-500">
+              <p class="text-sm text-foreground/80">
+                本文翻译自: 
+                <a href={article.data.originalUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">
+                  {article.data.originalUrl}
+                </a>
+              </p>
+              {article.data.originalAuthor && (
+                <p class="text-sm mt-1 text-foreground/80">原作者: {article.data.originalAuthor}</p>
+              )}
+            </div>
+          )}
+        </header>
+
+        <!-- Article Content -->
+        <div class="typography-content max-w-none">
+          <Content />
+        </div>
+
+        <!-- Article Footer -->
+        <footer class="mt-12 pt-8 border-t border-border">
+          <div class="flex justify-between items-center">
+            <a href="/articles" class="text-primary hover:underline">
+              ← 返回文章列表
+            </a>
+          </div>
+        </footer>
+      </article>
+
+      <!-- 右侧边栏 - 目录 -->
+      {headings.length > 0 && (
+        <aside class="hidden xl:block w-56 shrink-0">
+          <div class="sticky top-24">
+            <TableOfContents client:load headings={headings} />
+          </div>
+        </aside>
+      )}
     </div>
-
-    <!-- Article Footer -->
-    <footer class="mt-12 pt-8 border-t">
-      <div class="flex justify-between items-center">
-        <a href="/articles" class="text-blue-600 hover:underline">
-          ← 返回文章列表
-        </a>
-      </div>
-    </footer>
-  </article>
+  </div>
 </MainLayout>

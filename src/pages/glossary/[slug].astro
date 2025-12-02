@@ -3,7 +3,6 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import MainLayout from '../../layouts/main.astro';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const glossary = await getCollection('glossary');
@@ -42,47 +41,47 @@ const canonicalUrl = `${siteUrl}/glossary/${entry.id}`;
   <article class="container mx-auto px-4 py-8 max-w-4xl">
     <header class="mb-8">
       <div class="mb-4">
-        <a href="/glossary" class="text-blue-600 hover:underline text-sm">
+        <a href="/glossary" class="text-primary hover:underline text-sm">
           ← 返回知识地图
         </a>
       </div>
-      <h1 class="text-4xl font-bold mb-4">{entry.data.title}</h1>
+      <h1 class="text-4xl font-bold mb-4 text-foreground">{entry.data.title}</h1>
       {entry.data.description && (
-        <p class="text-xl text-gray-600 mb-4">{entry.data.description}</p>
+        <p class="text-xl text-muted-foreground mb-4">{entry.data.description}</p>
       )}
       
       <!-- AI 生成内容提示 -->
-      <Alert variant="info" className="mb-6">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-4 w-4"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M12 16v-4"></path>
-          <path d="M12 8h.01"></path>
-        </svg>
-        <AlertDescription>
-          <p>本术语解释由 AI 辅助生成，内容经过社区成员审核和完善。如发现错误或希望补充内容，欢迎通过 <a href="https://github.com/PECommunity/community/issues" class="underline hover:text-blue-700 dark:hover:text-blue-300" target="_blank" rel="noopener noreferrer">GitHub Issues</a> 提出建议或直接提交 PR 参与贡献。</p>
-        </AlertDescription>
-      </Alert>
+      <div class="mb-6 p-4 rounded-lg border border-primary/30 bg-primary/10 text-primary-foreground/90">
+        <div class="flex items-start gap-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-4 w-4 mt-0.5 text-primary shrink-0"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 16v-4"></path>
+            <path d="M12 8h.01"></path>
+          </svg>
+          <p class="text-sm text-foreground/80">本术语解释由 AI 辅助生成，内容经过社区成员审核和完善。如发现错误或希望补充内容，欢迎通过 <a href="https://github.com/PECommunity/community/issues" class="underline text-primary hover:text-primary/80" target="_blank" rel="noopener noreferrer">GitHub Issues</a> 提出建议或直接提交 PR 参与贡献。</p>
+        </div>
+      </div>
     </header>
 
     {headings.length > 0 && (
-      <aside class="mb-8 p-4 bg-gray-50 rounded-lg">
-        <h2 class="text-xl font-semibold mb-2">目录</h2>
+      <aside class="mb-8 p-4 bg-secondary rounded-lg border border-border">
+        <h2 class="text-xl font-semibold mb-2 text-foreground">目录</h2>
         <nav>
           <ul class="space-y-1">
             {headings.map((heading: any) => (
               <li style={`margin-left: ${(heading.depth - 1) * 1}rem`}>
-                <a href={`#${heading.slug}`} class="text-blue-600 hover:underline">
+                <a href={`#${heading.slug}`} class="text-primary hover:underline">
                   {heading.text}
                 </a>
               </li>
@@ -96,8 +95,8 @@ const canonicalUrl = `${siteUrl}/glossary/${entry.id}`;
       <Content />
     </div>
 
-    <footer class="mt-12 pt-8 border-t">
-      <a href="/glossary" class="text-blue-600 hover:underline">
+    <footer class="mt-12 pt-8 border-t border-border">
+      <a href="/glossary" class="text-primary hover:underline">
         ← 返回知识地图
       </a>
     </footer>

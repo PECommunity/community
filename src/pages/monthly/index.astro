@@ -31,23 +31,23 @@ const sortedArticles = monthlyArticles.sort((a: CollectionEntry<'monthly'>, b: C
     )}
     
     {ReadmeContent && (
-      <div class="typography-content mb-12 pb-8 border-b">
+      <div class="typography-content mb-12 pb-8 border-b border-border">
         <ReadmeContent />
       </div>
     )}
     
     <div class="space-y-6">
       {sortedArticles.map((article: CollectionEntry<'monthly'>) => (
-        <article class="border-b pb-6">
+        <article class="border-b border-border pb-6">
           <a href={`/monthly/${article.id.replace(/\.(md|mdx)$/, '')}`} class="group">
-            <h2 class="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+            <h2 class="text-2xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors">
               {article.data.title}
             </h2>
           </a>
           {article.data.description && (
-            <p class="text-gray-600 mb-2">{article.data.description}</p>
+            <p class="text-muted-foreground mb-2">{article.data.description}</p>
           )}
-          <div class="flex items-center gap-4 text-sm text-gray-500">
+          <div class="flex items-center gap-4 text-sm text-muted-foreground">
             {article.data.pubDate && (
               <time datetime={article.data.pubDate.toISOString()}>
                 {article.data.pubDate.toLocaleDateString('zh-CN', {
@@ -64,7 +64,7 @@ const sortedArticles = monthlyArticles.sort((a: CollectionEntry<'monthly'>, b: C
           {article.data.tags && article.data.tags.length > 0 && (
             <div class="flex gap-2 mt-2">
               {article.data.tags.map((tag: string) => (
-                <span class="text-xs bg-gray-100 px-2 py-1 rounded">{tag}</span>
+                <span class="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded">{tag}</span>
               ))}
             </div>
           )}

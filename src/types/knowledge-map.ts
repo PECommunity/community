@@ -47,42 +47,42 @@ export interface CategoryConfig {
   borderColor: string;
 }
 
-// 分类颜色映射
+// 分类颜色映射 - 深色主题优化配色
 export const CATEGORY_COLORS: Record<GlossaryCategory, CategoryConfig> = {
   'core-concept': {
     label: '核心概念',
-    color: 'rgb(99, 102, 241)',      // indigo-500
-    bgColor: 'rgb(238, 242, 255)',   // indigo-50
-    borderColor: 'rgb(165, 180, 252)' // indigo-300
+    color: 'rgb(129, 140, 248)',      // indigo-400
+    bgColor: 'rgba(99, 102, 241, 0.15)', // indigo with opacity
+    borderColor: 'rgb(129, 140, 248)'    // indigo-400
   },
   'platform-product': {
     label: '平台产品',
-    color: 'rgb(59, 130, 246)',      // blue-500
-    bgColor: 'rgb(239, 246, 255)',   // blue-50
-    borderColor: 'rgb(147, 197, 253)' // blue-300
+    color: 'rgb(96, 165, 250)',       // blue-400
+    bgColor: 'rgba(59, 130, 246, 0.15)', // blue with opacity
+    borderColor: 'rgb(96, 165, 250)'     // blue-400
   },
   'team-role': {
     label: '团队角色',
-    color: 'rgb(16, 185, 129)',      // emerald-500
-    bgColor: 'rgb(236, 253, 245)',   // emerald-50
-    borderColor: 'rgb(110, 231, 183)' // emerald-300
+    color: 'rgb(52, 211, 153)',       // emerald-400
+    bgColor: 'rgba(16, 185, 129, 0.15)', // emerald with opacity
+    borderColor: 'rgb(52, 211, 153)'     // emerald-400
   },
   'methodology': {
     label: '方法论',
-    color: 'rgb(168, 85, 247)',      // purple-500
-    bgColor: 'rgb(250, 245, 255)',   // purple-50
-    borderColor: 'rgb(216, 180, 254)' // purple-300
+    color: 'rgb(192, 132, 252)',      // purple-400
+    bgColor: 'rgba(168, 85, 247, 0.15)', // purple with opacity
+    borderColor: 'rgb(192, 132, 252)'    // purple-400
   },
   'user-experience': {
     label: '用户体验',
-    color: 'rgb(236, 72, 153)',      // pink-500
-    bgColor: 'rgb(253, 242, 248)',   // pink-50
-    borderColor: 'rgb(249, 168, 212)' // pink-300
+    color: 'rgb(244, 114, 182)',      // pink-400
+    bgColor: 'rgba(236, 72, 153, 0.15)', // pink with opacity
+    borderColor: 'rgb(244, 114, 182)'    // pink-400
   },
   'technical-practice': {
     label: '技术实践',
-    color: 'rgb(234, 88, 12)',       // orange-500
-    bgColor: 'rgb(255, 247, 237)',   // orange-50
-    borderColor: 'rgb(253, 186, 116)' // orange-300
+    color: 'rgb(251, 146, 60)',       // orange-400
+    bgColor: 'rgba(234, 88, 12, 0.15)',  // orange with opacity
+    borderColor: 'rgb(251, 146, 60)'     // orange-400
   }
 };

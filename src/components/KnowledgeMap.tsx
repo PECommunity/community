@@ -25,6 +25,7 @@ interface KnowledgeMapProps {
   initialNodes: GlossaryNodeType[];
   initialEdges: GlossaryEdge[];
   allNodes?: GlossaryNodeType[]; // 所有节点数据，用于查找关联
+  initialZoom?: number; // 初始缩放级别，默认 0.7
 }
 
 // 注册自定义节点类型
@@ -33,7 +34,12 @@ const nodeTypes: NodeTypes = {
   categoryLabel: CategoryLabel,
 };
 
-export default function KnowledgeMap({ initialNodes, initialEdges, allNodes = [] }: KnowledgeMapProps) {
+export default function KnowledgeMap({ 
+  initialNodes, 
+  initialEdges, 
+  allNodes = [],
+  initialZoom = 0.7 
+}: KnowledgeMapProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [isRelatedView, setIsRelatedView] = useState(false);
@@ -128,20 +134,25 @@ export default function KnowledgeMap({ initialNodes, initialEdges, allNodes = []
         onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
         fitView
+        fitViewOptions={{
+          padding: 0.2, // 视口边距
+          minZoom: Math.max(0.3, initialZoom - 0.2), // 最小缩放
+          maxZoom: Math.min(1.2, initialZoom + 0.3), // 最大缩放
+        }}
         minZoom={0.1}
         maxZoom={1.5}
         defaultEdgeOptions={{
           type: 'smoothstep',
           animated: false,
-          style: { stroke: '#94a3b8', strokeWidth: 2 },
+          style: { stroke: '#475569', strokeWidth: 2 }, // slate-600 for dark theme
         }}
       >
-        {/* 背景网格 */}
+        {/* 背景网格 - 深色主题 */}
         <Background 
           variant={BackgroundVariant.Dots}
           gap={16}
           size={1}
-          color="#e2e8f0"
+          color="#334155" // slate-700
         />
         
         {/* 小地图 */}
@@ -150,6 +161,9 @@ export default function KnowledgeMap({ initialNodes, initialEdges, allNodes = []
           nodeStrokeWidth={3}
           zoomable
           pannable
+          style={{
+            backgroundColor: 'rgba(15, 23, 42, 0.8)', // slate-900 with opacity
+          }}
         />
         
         {/* 控制按钮 */}
@@ -161,7 +175,7 @@ export default function KnowledgeMap({ initialNodes, initialEdges, allNodes = []
         <div className="absolute top-6 left-6 z-10">
           <Button
             onClick={handleBackToAll}
-            className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-lg"
+            className="bg-slate-800 text-slate-100 border-2 border-slate-600 hover:bg-slate-700 shadow-lg"
           >
             ← 返回全部
           </Button>

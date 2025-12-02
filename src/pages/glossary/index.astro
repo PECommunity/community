@@ -23,7 +23,7 @@ const allEdgesData = edges;
   <!-- 全屏容器 -->
   <div class="relative w-full h-screen flex">
     <!-- 知识地图主区域 -->
-    <div class="flex-1 bg-white dark:bg-gray-900" id="knowledge-map-container">
+    <div class="flex-1 bg-background" id="knowledge-map-container">
       <KnowledgeMapComponent 
         client:load
         initialNodes={nodes}
@@ -33,66 +33,65 @@ const allEdgesData = edges;
     </div>
 
     <!-- 右侧工具栏 -->
-    <div class="w-80 bg-gray-50 dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 overflow-y-auto">
+    <div class="w-80 bg-card border-l border-border overflow-y-auto">
       <div class="p-6 space-y-6">
         <!-- 标题 -->
         <div>
-          <h1 class="text-2xl font-bold mb-2">知识地图</h1>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <h1 class="text-2xl font-bold mb-2 text-foreground">知识地图</h1>
+          <p class="text-sm text-muted-foreground">
             探索平台工程术语及其关联关系
           </p>
         </div>
 
         <!-- 统计信息 -->
-        <div class="p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
-          <div class="text-sm font-semibold mb-2">数据统计</div>
-          <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+        <div class="p-4 bg-secondary rounded-lg border border-border">
+          <div class="text-sm font-semibold mb-2 text-foreground">数据统计</div>
+          <div class="space-y-1 text-sm text-muted-foreground">
             <div class="flex justify-between">
               <span>术语数量</span>
-              <span class="font-medium text-gray-900 dark:text-gray-100">{nodes.length}</span>
+              <span class="font-medium text-foreground">{nodes.length}</span>
             </div>
             <div class="flex justify-between">
               <span>关联关系</span>
-              <span class="font-medium text-gray-900 dark:text-gray-100">{allEdgesData.length}</span>
+              <span class="font-medium text-foreground">{allEdgesData.length}</span>
             </div>
           </div>
         </div>
 
         <!-- 图例 -->
-        <div class="p-4 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
-          <div class="text-sm font-semibold mb-3">术语分类</div>
+        <div class="p-4 bg-secondary rounded-lg border border-border">
+          <div class="text-sm font-semibold mb-3 text-foreground">术语分类</div>
           <div class="space-y-2">
-            <div class="flex items-center gap-2 text-sm">
-              <div class="w-4 h-4 rounded" style="background-color: rgb(238, 242, 255); border: 2px solid rgb(165, 180, 252);"></div>
+            <div class="flex items-center gap-2 text-sm text-foreground">
+              <div class="w-4 h-4 rounded" style="background-color: rgba(99, 102, 241, 0.3); border: 2px solid rgb(129, 140, 248);"></div>
               <span>核心概念</span>
             </div>
-            <div class="flex items-center gap-2 text-sm">
-              <div class="w-4 h-4 rounded" style="background-color: rgb(239, 246, 255); border: 2px solid rgb(147, 197, 253);"></div>
+            <div class="flex items-center gap-2 text-sm text-foreground">
+              <div class="w-4 h-4 rounded" style="background-color: rgba(59, 130, 246, 0.3); border: 2px solid rgb(96, 165, 250);"></div>
               <span>平台产品</span>
             </div>
-            <div class="flex items-center gap-2 text-sm">
-              <div class="w-4 h-4 rounded" style="background-color: rgb(236, 253, 245); border: 2px solid rgb(110, 231, 183);"></div>
+            <div class="flex items-center gap-2 text-sm text-foreground">
+              <div class="w-4 h-4 rounded" style="background-color: rgba(16, 185, 129, 0.3); border: 2px solid rgb(52, 211, 153);"></div>
               <span>团队角色</span>
             </div>
-            <div class="flex items-center gap-2 text-sm">
-              <div class="w-4 h-4 rounded" style="background-color: rgb(250, 245, 255); border: 2px solid rgb(216, 180, 254);"></div>
+            <div class="flex items-center gap-2 text-sm text-foreground">
+              <div class="w-4 h-4 rounded" style="background-color: rgba(168, 85, 247, 0.3); border: 2px solid rgb(192, 132, 252);"></div>
               <span>方法论</span>
-            </div>
-            <div class="flex items-center gap-2 text-sm">
-              <div class="w-4 h-4 rounded" style="background-color: rgb(253, 242, 248); border: 2px solid rgb(249, 168, 212);"></div>
+            <div class="flex items-center gap-2 text-sm text-foreground">
+              <div class="w-4 h-4 rounded" style="background-color: rgba(236, 72, 153, 0.3); border: 2px solid rgb(244, 114, 182);"></div>
               <span>用户体验</span>
             </div>
-            <div class="flex items-center gap-2 text-sm">
-              <div class="w-4 h-4 rounded" style="background-color: rgb(255, 247, 237); border: 2px solid rgb(253, 186, 116);"></div>
+            <div class="flex items-center gap-2 text-sm text-foreground">
+              <div class="w-4 h-4 rounded" style="background-color: rgba(251, 146, 60, 0.3); border: 2px solid rgb(251, 191, 36);"></div>
               <span>技术实践</span>
             </div>
           </div>
         </div>
 
         <!-- 使用说明 -->
-        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-          <div class="text-sm font-semibold mb-3 text-blue-900 dark:text-blue-100">使用提示</div>
-          <ul class="text-sm text-blue-800 dark:text-blue-200 space-y-2">
+        <div class="p-4 bg-primary/10 rounded-lg border border-primary/30">
+          <div class="text-sm font-semibold mb-3 text-foreground">使用提示</div>
+          <ul class="text-sm text-muted-foreground space-y-2">
             <li>• 点击术语卡片查看关联术语</li>
             <li>• 关联视图中点击卡片查看详情</li>
             <li>• 使用鼠标滚轮可缩放视图</li>

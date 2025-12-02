@@ -13,9 +13,9 @@ function GlossaryNode({ data }: NodeProps<GlossaryNodeData>) {
   const categoryConfig = data.category 
     ? CATEGORY_COLORS[data.category]
     : {
-        color: 'rgb(100, 116, 139)',    // slate-500
-        bgColor: 'rgb(248, 250, 252)',  // slate-50
-        borderColor: 'rgb(203, 213, 225)' // slate-300
+        color: 'rgb(148, 163, 184)',    // slate-400
+        bgColor: 'rgba(100, 116, 139, 0.15)',  // slate with opacity
+        borderColor: 'rgb(148, 163, 184)' // slate-400
       };
 
   return (
@@ -50,7 +50,7 @@ function GlossaryNode({ data }: NodeProps<GlossaryNodeData>) {
               {data.title}
             </h3>
             {data.titleEn && (
-              <p className="text-xs text-gray-600 leading-tight">
+              <p className="text-xs text-slate-400 leading-tight">
                 {data.titleEn}
               </p>
             )}
@@ -59,7 +59,7 @@ function GlossaryNode({ data }: NodeProps<GlossaryNodeData>) {
           {/* 描述区域 */}
           <div className="flex-1 overflow-hidden">
             {data.description && (
-              <p className="text-xs text-gray-700 line-clamp-3 leading-relaxed">
+              <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed">
                 {data.description}
               </p>
             )}
@@ -79,7 +79,7 @@ function GlossaryNode({ data }: NodeProps<GlossaryNodeData>) {
               </span>
             )}
             {data.category && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-slate-400">
                 {CATEGORY_COLORS[data.category].label}
               </span>
             )}
